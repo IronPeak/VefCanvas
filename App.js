@@ -70,9 +70,11 @@ function App(canvasSelector) {
 	}
 
 	self.undo = function() {
-		var lastShape = self.shapes.pop();
-		self.oldShapes.push(lastShape);
-		self.redraw();
+		if(!self.shapes.length == 0) {
+			var lastShape = self.shapes.pop();
+			self.oldShapes.push(lastShape);
+			self.redraw();
+		}
 	}
 
 	self.redo = function() {
