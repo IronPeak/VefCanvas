@@ -98,6 +98,9 @@ $(function() {
 	$('#squarebutton').click(function(){app.shapeFactory = function() {
 		return new Square();
 	};});
+	$('#linebutton').click(function(){app.shapeFactory = function() {
+		return new Line();
+	};});
 	$('#clearbutton').click(function(){app.clear()});
 	$('#color').change(function(){app.setColor($(this).val())});
 });
