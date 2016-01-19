@@ -101,6 +101,9 @@ $(function() {
 	$('#linebutton').click(function(){app.shapeFactory = function() {
 		return new Line();
 	};});
+	$('#circlebutton').click(function(){app.shapeFactory = function() {
+		return new Circle();
+	};});
 	$('#clearbutton').click(function(){app.clear()});
 	$('#color').change(function(){app.setColor($(this).val())});
 });

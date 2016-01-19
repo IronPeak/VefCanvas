@@ -34,25 +34,18 @@ var Shape = Base.extend({
 
 var Line = Shape.extend ({
 
-
 	constructor: function() {
 		this.base("Line");
-		
-
 	},
 
 	draw: function(canvas) {
 
-		//console.log(this.size.x, this.size.y);
 		canvas.strokeStyle = this.color;
 		canvas.beginPath();
 		canvas.moveTo(this.size.x, this.size.y);
 		canvas.lineTo(this.pos.x, this.pos.y);
 		canvas.stroke();
 		this.base(canvas);
-		
-		
-		
 	},
 
 	startDrawing:function(point) {
@@ -73,13 +66,35 @@ var Line = Shape.extend ({
 		this.size.y = point.y;
 
 	},
-
-	added: function(canvas) {
-
-		
-	},	
-
-
-
 });
 
+var Circle = Shape.extend ({
+
+	constructor: function() {
+		this.base("Circle");
+		
+	},
+
+	draw: function(canvas) {
+
+		canvas.strokeStyle = this.color;
+		canvas.beginPath();
+		if(this.size.x < 0) {
+			this.size.x = Math.abs(this.size.x);
+
+		}
+		if(this.size.y < 0) {
+			this.size.y = Math.abs(this.size.y);
+
+		}
+		canvas.arc(this.pos.x, this.pos.y, this.size.x, 0, 2*Math.PI);
+		canvas.stroke();
+		this.base(canvas);
+	},
+
+	drawing:function(point) {
+		this.size.x = point.x - this.pos.x;
+		this.size.y = point.y - this.pos.y;
+	},
+
+});
