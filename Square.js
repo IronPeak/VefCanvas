@@ -28,3 +28,4 @@ var Square = Shape.extend({
 	},	
 
 });
+

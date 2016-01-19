@@ -91,7 +91,6 @@ function App(canvasSelector) {
 	
 	self.init();
 }
-
 var app = null;
 $(function() {
 	// Wire up events
