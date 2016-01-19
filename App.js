@@ -68,6 +68,20 @@ function App(canvasSelector) {
 		self.shapes = [];
 		self.redraw();
 	}
+
+	self.undo = function() {
+		var lastShape = self.shapes.pop();
+		self.oldShapes.push(lastShape);
+		self.redraw();
+	}
+
+	self.redo = function() {
+		if(!self.oldShapes.length == 0) {
+			var getLast = self.oldShapes.pop();
+			self.shapes.push(getLast);
+			self.redraw();
+		}
+	}
 	
 	self.setColor = function(color) {
 		self.color = color;
@@ -83,6 +97,7 @@ function App(canvasSelector) {
 		self.shapeFactory = null;
 		self.canvasContext = canvas.getContext("2d");
 		self.shapes = new Array();
+		self.oldShapes = new Array();
 		
 		// Set defaults
 		self.color = '#ff0000';	
@@ -105,5 +120,7 @@ $(function() {
 		return new Circle();
 	};});
 	$('#clearbutton').click(function(){app.clear()});
+	$('#undobutton').click(function(){app.undo()});
+	$('#redobutton').click(function(){app.redo()});
 	$('#color').change(function(){app.setColor($(this).val())});
 });
