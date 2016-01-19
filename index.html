@@ -1,0 +1,23 @@
+<html>
+<head>
+	<title>JS-Draw</title>
+	<style>
+		#toolbar {background-color:silver;}
+		#canvas {border:1px solid blue;display:block;}
+	</style>
+	<script type="text/javascript" src="base.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+	<script type="text/javascript" src="point.js"></script>
+	<script type="text/javascript" src="shape.js"></script>
+	<script type="text/javascript" src="square.js"></script>	
+</head>
+<body>	
+	<div id="toolbar">
+			<input type="radio" name="tool" id="squarebutton" value="square"></input><label for="squarebutton">Square</label>
+			<input type="color" name="color" id="color" value="#ff0000"></input>
+			<input type="button" name="clearbutton" id="clearbutton" value="clear"></input>
+	</div>
+	<canvas id="canvas" height="500" width="500"></canvas>
+</body>
+</html>
