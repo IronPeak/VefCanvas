@@ -9,7 +9,8 @@ function App(canvasSelector) {
 		var shape = self.shapeFactory();
 		shape.pos = startPos;
 		shape.color = self.color;
-
+		shape.brush = self.brush;
+		
 		shape.startDrawing(startPos,self.canvasContext);
 		startPos.log('drawing start');
 	
@@ -87,7 +88,13 @@ function App(canvasSelector) {
 	
 	self.setColor = function(color) {
 		self.color = color;
+		
 	}
+
+	self.setBrush = function(brush) {
+		self.brush = brush;
+	}
+
 
 	self.init = function() {
 		// Initialize App	
@@ -103,6 +110,7 @@ function App(canvasSelector) {
 		
 		// Set defaults
 		self.color = '#ff0000';	
+		self.brush = 5;
 		// TODO: Set sensible defaults ...
 	}
 	
@@ -125,4 +133,5 @@ $(function() {
 	$('#undobutton').click(function(){app.undo()});
 	$('#redobutton').click(function(){app.redo()});
 	$('#color').change(function(){app.setColor($(this).val())});
+	$('#brushsize').change(function(){app.setBrush($(this).val())});
 });

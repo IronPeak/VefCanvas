@@ -6,6 +6,7 @@ var Shape = Base.extend({
 		this.size = new Point(0,0);
 		this.color = color;
 		this.selected = false;
+		
 	},
 
 
@@ -40,6 +41,7 @@ var Line = Shape.extend ({
 
 	draw: function(canvas) {
 
+		canvas.lineWidth = this.brush;
 		canvas.strokeStyle = this.color;
 		canvas.beginPath();
 		canvas.moveTo(this.size.x, this.size.y);
@@ -76,7 +78,7 @@ var Circle = Shape.extend ({
 	},
 
 	draw: function(canvas) {
-
+		canvas.lineWidth = this.brush;
 		canvas.strokeStyle = this.color;
 		canvas.beginPath();
 		if(this.size.x < 0) {
@@ -98,3 +100,5 @@ var Circle = Shape.extend ({
 	},
 
 });
+
+
