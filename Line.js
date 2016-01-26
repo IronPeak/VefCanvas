@@ -24,13 +24,10 @@ var Line = Shape.extend ({
 	drawing:function(point) {
 		this.size.x = point.x;
 		this.size.y = point.y;
-
-
 	},
 
 	stopDrawing:function(point) {
 		this.size.x = point.x;
 		this.size.y = point.y;
-
 	},
 });
