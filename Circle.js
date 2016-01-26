@@ -6,11 +6,13 @@ var Circle = Shape.extend ({
 	},
 
 	draw: function(canvas) {
-		canvas.lineWidth = this.brush;
-		canvas.strokeStyle = this.brushColor;
+		this.prepareDraw(canvas);
 		canvas.beginPath();
 		canvas.arc(this.pos.x, this.pos.y, this.radius, 0, 2*Math.PI);
 		canvas.stroke();
+		if(this.fill) {
+			canvas.fill();
+		}
 		this.base(canvas);
 	},
 

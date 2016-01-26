@@ -8,7 +8,9 @@ function App(canvasSelector) {
 		var startPos = self.getEventPoint(e);
 		var shape = self.shapeFactory();
 		shape.pos = startPos;
-		shape.brushColor = self.color;
+		shape.brushColor = self.brushColor;
+		shape.fillColor = self.fillColor;
+		shape.fill = self.fill;
 		shape.brush = self.brush;
 		
 		shape.startDrawing(startPos,self.canvasContext);
@@ -86,8 +88,18 @@ function App(canvasSelector) {
 		}
 	}
 	
-	self.setColor = function(color) {
-		self.color = color;
+	self.setBrushColor = function(color) {
+		self.brushColor = color;
+		
+	}
+	
+	self.setFillColor = function(color) {
+		self.fillColor = color;
+		
+	}
+	
+	self.setFillOption = function(checked) {
+		self.fill = checked;
 		
 	}
 
@@ -109,7 +121,9 @@ function App(canvasSelector) {
 		self.oldShapes = new Array();
 		
 		// Set defaults
-		self.color = '#ff0000';	
+		self.brushColor = '#ff0000';
+		self.fillColor = '#ff0000';
+		self.fill = false;
 		self.brush = 5;
 		// TODO: Set sensible defaults ...
 	}
@@ -135,6 +149,8 @@ $(function() {
 	$('#clearbutton').click(function(){app.clear()});
 	$('#undobutton').click(function(){app.undo()});
 	$('#redobutton').click(function(){app.redo()});
-	$('#color').change(function(){app.setColor($(this).val())});
+	$('#brushcolor').change(function(){app.setBrushColor($(this).val())});
+	$('#fillcolor').change(function(){app.setFillColor($(this).val())});
+	$('#fillshapes').click(function(){app.setFillOption(this.checked)});
 	$('#brushsize').change(function(){app.setBrush($(this).val())});
 });

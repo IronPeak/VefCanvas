@@ -6,8 +6,7 @@ var Ellipse = Shape.extend ({
 	},
 
 	draw: function(canvas) {	
-		canvas.lineWidth = this.brush;
-		canvas.strokeStyle = this.brushColor;
+		this.prepareDraw(canvas);
 	
 		var centerX = this.pos.x + this.size.x / 2;
 		var centerY = this.pos.y + this.size.y / 2;
@@ -32,6 +31,9 @@ var Ellipse = Shape.extend ({
 		);
 		
 		canvas.stroke();
+		if(this.fill) {
+			canvas.fill();
+		}
 		this.base(canvas);
 	},
 

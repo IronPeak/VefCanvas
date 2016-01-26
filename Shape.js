@@ -4,8 +4,9 @@ var Shape = Base.extend({
 		this.name = name;
 		this.pos = null;
 		this.size = new Point(0,0);
-		this.brushColor = color;
+		this.brushColor = null;
 		this.fillColor = null;
+		this.fill = false;
 		this.selected = false;
 	},
 
@@ -33,5 +34,11 @@ var Shape = Base.extend({
 	
 	contains: function(point) {
 		return false;
+	},
+	
+	prepareDraw: function(canvas) {
+		canvas.lineWidth = this.brush;
+		canvas.strokeStyle = this.brushColor;
+		canvas.fillStyle = this.fillColor;
 	}
 });
