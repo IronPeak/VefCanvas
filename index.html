@@ -5,24 +5,35 @@
 		#toolbar {background-color:silver;}
 		#canvas {border:1px solid blue;display:block;}
 	</style>
-	<script type="text/javascript" src="base.js"></script>
+	<script type="text/javascript" src="Base.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-	<script type="text/javascript" src="app.js"></script>
-	<script type="text/javascript" src="point.js"></script>
-	<script type="text/javascript" src="shape.js"></script>
-	<script type="text/javascript" src="square.js"></script>	
+	<script type="text/javascript" src="App.js"></script>
+	<script type="text/javascript" src="Point.js"></script>
+	<script type="text/javascript" src="Shape.js"></script>
+	<script type="text/javascript" src="Square.js"></script>
+	<script type="text/javascript" src="Line.js"></script>
+	<script type="text/javascript" src="Circle.js"></script>
+	<script type="text/javascript" src="Ellipse.js"></script>
 </head>
 <body>
 	<div id="toolbar">
-			<input type="radio" name="tool" id="squarebutton" value="square"></input><label for="squarebutton">Square</label>
+			<input type="radio" name="tool" id="squarebutton" value="square">
+			</input><label for="squarebutton">Square</label>
+			
 			<input type="radio" name="tool" id="linebutton" value="line"> </input>
 			<label for="linebutton">Line</label>
+			
 			<input type="radio" name="tool" id="circlebutton" value="circle"> </input>
 			<label for="circlebutton">Circle</label>
+			
+			<input type="radio" name="tool" id="ellipsebutton" value="ellipse"> </input>
+			<label for="ellipsebutton">Ellipse</label>
+			
 			<input type="color" name="color" id="color" value="#ff0000"></input>
 
 			<input type="range"  name="brush"  id="brushsize"  value="5"  min="0" max="20"> </input>
 			<label for="brushsize">Brush Size</label> </div>
+			
 			<input type="button" name="clearbutton" id="clearbutton" value="clear"></input>
 			<input type="button" name="undobutton" id="undobutton" value="undo"></input>
 			<input type="button" name="redobutton" id="redobutton" value="redo"></input>

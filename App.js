@@ -129,6 +129,9 @@ $(function() {
 	$('#circlebutton').click(function(){app.shapeFactory = function() {
 		return new Circle();
 	};});
+	$('#ellipsebutton').click(function(){app.shapeFactory = function() {
+		return new Ellipse();
+	};});
 	$('#clearbutton').click(function(){app.clear()});
 	$('#undobutton').click(function(){app.undo()});
 	$('#redobutton').click(function(){app.redo()});
