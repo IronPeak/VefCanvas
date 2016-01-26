@@ -8,7 +8,7 @@ function App(canvasSelector) {
 		var startPos = self.getEventPoint(e);
 		var shape = self.shapeFactory();
 		shape.pos = startPos;
-		shape.color = self.color;
+		shape.brushColor = self.color;
 		shape.brush = self.brush;
 		
 		shape.startDrawing(startPos,self.canvasContext);

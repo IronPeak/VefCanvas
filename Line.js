@@ -7,7 +7,7 @@ var Line = Shape.extend ({
 	draw: function(canvas) {
 
 		canvas.lineWidth = this.brush;
-		canvas.strokeStyle = this.color;
+		canvas.strokeStyle = this.brushColor;
 		canvas.beginPath();
 		canvas.moveTo(this.size.x, this.size.y);
 		canvas.lineTo(this.pos.x, this.pos.y);
