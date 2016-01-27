@@ -121,11 +121,10 @@ function App(canvasSelector) {
 		self.oldShapes = new Array();
 		
 		// Set defaults
-		self.brushColor = '#ff0000';
-		self.fillColor = '#ff0000';
+		self.brushColor = $('input[id=brushcolor]').val();
+		self.fillColor = $('input[id=fillcolor]').val();
 		self.fill = false;
-		self.brush = 5;
-		// TODO: Set sensible defaults ...
+		self.brush = $('input[id=brushsize]').val();;
 	}
 	
 	self.init();
