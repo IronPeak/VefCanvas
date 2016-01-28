@@ -36,6 +36,7 @@ function App(canvasSelector) {
 			pos.log('drawing stop')
 
 			self.shapes.push(shape);
+			self.edits.push({type: "Created", shape: shape, active: true});
 			shape.added(self.canvasContext);
 
 			// Remove drawing and drawingStop functions from the mouse events
@@ -55,7 +56,9 @@ function App(canvasSelector) {
 	}
 	
 	self.movingStart = function(e, object) {	
-	
+		var startPos = self.getEventPoint(e);
+		var startSize = object.size;
+		
 		var move = function(e) {
 			var pos = self.getEventPoint(e);
 			
@@ -69,6 +72,7 @@ function App(canvasSelector) {
 
 			object.moveTo(pos);
 
+			self.edits.push({type: "Moved", shape: object, prevPos: startPos, prevSize: startSize, pos: object.pos, size: object.size, active: true});
 			// Remove drawing and drawingStop functions from the mouse events
 			self.canvas.off({
 				mousemove:move,
@@ -104,7 +108,9 @@ function App(canvasSelector) {
 		self.canvasContext.clearRect(0, 0, self.canvasContext.canvas.width, self.canvasContext.canvas.height);
 		if (self.shapes !== undefined) {
 			for(var i = 0; i < self.shapes.length; i++) {
-				self.shapes[i].draw(self.canvasContext);
+				if(self.shapes[i].active) {
+					self.shapes[i].draw(self.canvasContext);
+				}
 			}
 		}
 		
@@ -113,23 +119,54 @@ function App(canvasSelector) {
 	self.clear = function() {
 		self.shapes = [];
 
-
 		self.redraw();
 	}
 
 	self.undo = function() {
-		if(!self.shapes.length == 0) {
-			var lastShape = self.shapes.pop();
-			self.oldShapes.push(lastShape);
-			self.redraw();
+		if(!self.edits.length == 0) {
+			for(var i = this.edits.length - 1; i >= 0; i--) {
+				if(this.edits[i].active == true) {
+					this.undoEdit(this.edits[i]);
+					self.redraw();
+					return;
+				}
+			}
+		}
+	}
+	
+	self.undoEdit = function(edit) {
+		if(edit.type == "Created") {
+			edit.active = false;
+			edit.shape.active = false;
+		}
+		if(edit.type == "Moved") {
+			edit.active = false;
+			edit.shape.pos = edit.prevPos;
+			edit.shape.size = edit.prevSize;
 		}
 	}
 
 	self.redo = function() {
-		if(!self.oldShapes.length == 0) {
-			var getLast = self.oldShapes.pop();
-			self.shapes.push(getLast);
-			self.redraw();
+		if(!self.edits.length == 0) {
+			for(var i = 0; i < this.edits.length; i++) {
+				if(this.edits[i].active == false) {
+					this.redoEdit(this.edits[i]);
+					self.redraw();
+					return;
+				}
+			}
+		}
+	}
+	
+	self.redoEdit = function(edit) {
+		if(edit.type == "Created") {
+			edit.active = true;
+			edit.shape.active = true;
+		}
+		if(edit.type == "Moved") {
+			edit.active = true;
+			edit.shape.pos = edit.pos;
+			edit.shape.size = edit.size;
 		}
 	}
 
@@ -137,7 +174,6 @@ function App(canvasSelector) {
 		self.newPage[index] = self.shapes;
 		index++;
 		self.shapes = self.newPage[index];
-		self.oldShapes = [];
 		self.redraw();
 	}
 
@@ -183,9 +219,8 @@ function App(canvasSelector) {
 		self.shapeFactory = null;
 		self.canvasContext = canvas.getContext("2d");
 		self.shapes = new Array();
-		self.oldShapes = new Array();
 		self.newPage = new Array();
-
+		self.edits = new Array();
 		
 		// Set defaults
 		self.brushColor = $('input[id=brushcolor]').val();

@@ -7,7 +7,7 @@ var Shape = Base.extend({
 		this.brushColor = null;
 		this.fillColor = null;
 		this.fill = false;
-		this.selected = false;
+		this.active = true;
 	},
 
 	draw:function(canvas) {		
