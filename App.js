@@ -26,6 +26,9 @@ function App(canvasSelector) {
 		}
 
 		var drawingStop = function(e) {
+			if (self.shapes === undefined) {
+				self.shapes = [];
+			}
 			var pos = self.getEventPoint(e);
 
 			shape.stopDrawing(pos,self.canvasContext);
@@ -62,13 +65,18 @@ function App(canvasSelector) {
 
 	self.redraw = function() {
 		self.canvasContext.clearRect(0, 0, self.canvasContext.canvas.width, self.canvasContext.canvas.height);
-		for(var i = 0; i < self.shapes.length; i++) {
-			self.shapes[i].draw(self.canvasContext);
+		if (self.shapes !== undefined) {
+			for(var i = 0; i < self.shapes.length; i++) {
+				self.shapes[i].draw(self.canvasContext);
+			}
 		}
+		
 	}
 	
 	self.clear = function() {
 		self.shapes = [];
+
+
 		self.redraw();
 	}
 
@@ -86,6 +94,31 @@ function App(canvasSelector) {
 			self.shapes.push(getLast);
 			self.redraw();
 		}
+	}
+
+	self.nextb = function() {
+		self.newPage[index] = self.shapes;
+		index++;
+		self.shapes = self.newPage[index];
+		self.redraw();
+
+		console.log("Length",self.newPage.length);
+		console.log("Index",index);
+	}
+
+	self.prevb = function() {
+		
+		if(index === 0) {
+		}
+		else {
+			self.newPage[index] = self.shapes;
+			index--;
+			self.shapes = self.newPage[index];
+			self.redraw();
+
+		}
+
+
 	}
 	
 	self.setBrushColor = function(color) {
@@ -119,12 +152,15 @@ function App(canvasSelector) {
 		self.canvasContext = canvas.getContext("2d");
 		self.shapes = new Array();
 		self.oldShapes = new Array();
+		self.newPage = new Array();
+
 		
 		// Set defaults
 		self.brushColor = $('input[id=brushcolor]').val();
 		self.fillColor = $('input[id=fillcolor]').val();
 		self.fill = false;
 		self.brush = $('input[id=brushsize]').val();;
+		self.index = index = 0;
 	}
 	
 	self.init();
@@ -148,6 +184,10 @@ $(function() {
 	$('#clearbutton').click(function(){app.clear()});
 	$('#undobutton').click(function(){app.undo()});
 	$('#redobutton').click(function(){app.redo()});
+
+	$('#nextbutton').click(function(){app.nextb()});
+	$('#prevbutton').click(function(){app.prevb()});
+
 	$('#brushcolor').change(function(){app.setBrushColor($(this).val())});
 	$('#fillcolor').change(function(){app.setFillColor($(this).val())});
 	$('#fillshapes').click(function(){app.setFillOption(this.checked)});
