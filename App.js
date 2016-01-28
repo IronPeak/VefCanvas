@@ -213,6 +213,9 @@ $(function() {
 	$('#ellipsebutton').click(function(){app.shapeFactory = function() {
 		return new Ellipse();
 	};});
+	$('#penbutton').click(function(){app.shapeFactory = function() {
+		return new Pen();
+	};});
 	$('#selectbutton').click(function(){app.shapeFactory = null;});
 	$('#clearbutton').click(function(){app.clear()});
 	$('#undobutton').click(function(){app.undo()});
