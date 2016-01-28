@@ -36,6 +36,10 @@ var Shape = Base.extend({
 		return false;
 	},
 	
+	moveTo: function(point) {
+		this.pos = point;
+	},
+	
 	prepareDraw: function(canvas) {
 		canvas.lineWidth = this.brush;
 		canvas.strokeStyle = this.brushColor;

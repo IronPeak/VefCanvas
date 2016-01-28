@@ -2,32 +2,25 @@ var Ellipse = Shape.extend ({
 
 	constructor: function() {
 		this.base("Ellipse");
-		
 	},
 
 	draw: function(canvas) {	
 		this.prepareDraw(canvas);
-	
-		var centerX = this.pos.x + this.size.x / 2;
-		var centerY = this.pos.y + this.size.y / 2;
-	
-		var diameterX = this.size.x;
-		var diameterY = this.size.y;
 		
 		canvas.beginPath();
 		
-		canvas.moveTo(centerX, centerY - diameterY);
+		canvas.moveTo(this.pos.x, this.pos.y - this.size.y);
 		
 		canvas.bezierCurveTo(
-			centerX + diameterX, centerY - diameterY,
-			centerX + diameterX, centerY + diameterY,
-			centerX, centerY + diameterY
+			this.pos.x + this.size.x, this.pos.y - this.size.y,
+			this.pos.x + this.size.x, this.pos.y + this.size.y,
+			this.pos.x, this.pos.y + this.size.y
 		);
 		
 		canvas.bezierCurveTo(
-			centerX - diameterX, centerY + diameterY,
-			centerX - diameterX, centerY - diameterY,
-			centerX, centerY - diameterY
+			this.pos.x - this.size.x, this.pos.y + this.size.y,
+			this.pos.x - this.size.x, this.pos.y - this.size.y,
+			this.pos.x, this.pos.y - this.size.y
 		);
 		
 		canvas.stroke();
@@ -40,6 +33,16 @@ var Ellipse = Shape.extend ({
 	drawing:function(point) {
 		this.size.x = point.x - this.pos.x;
 		this.size.y = point.y - this.pos.y;
+	},
+	
+	stopDrawing:function(point) {
+		this.drawing(point);
+	},
+	
+	contains: function(point) {
+		var deltaX = Math.abs(point.x - this.pos.x);
+		var deltaY = Math.abs(point.y - this.pos.y);
+		return deltaX <= this.size.x && deltaY <= this.size.y;
 	},
 
 });

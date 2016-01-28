@@ -29,4 +29,11 @@ var Circle = Shape.extend ({
 		this.drawing(point);
 	},
 	
+	contains: function(point) {
+		var deltaX = point.x - this.pos.x;
+		var deltaY = point.y - this.pos.y;
+		var sqrDistance = deltaX * deltaX + deltaY * deltaY;
+		return sqrDistance < this.radius * this.radius;
+	},
+	
 });

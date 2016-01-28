@@ -53,11 +53,48 @@ function App(canvasSelector) {
 			mouseup:drawingStop
 		});	
 	}
+	
+	self.movingStart = function(e, object) {	
+	
+		var move = function(e) {
+			var pos = self.getEventPoint(e);
+			
+			object.moveTo(pos);
+			
+			self.redraw();
+		}
+
+		var moveStop = function(e) {
+			var pos = self.getEventPoint(e);
+
+			object.moveTo(pos);
+
+			// Remove drawing and drawingStop functions from the mouse events
+			self.canvas.off({
+				mousemove:move,
+				mouseup:moveStop
+			});
+
+			self.redraw();
+		}
+
+		// Add drawing and drawingStop functions to the mousemove and mouseup events
+		self.canvas.on({
+			mousemove:move,
+			mouseup:moveStop
+		});	
+	}
 
 	self.mousedown = function(e) {
 		if(self.shapeFactory != null) {
 			self.drawingStart(e);
 		} else {
+			for(var i = 0; i < self.shapes.length; i++) {
+				if(self.shapes[i].contains(self.getEventPoint(e))) {
+					self.movingStart(e, self.shapes[i]);
+					break;
+				}
+			}
 		}
 
 		self.redraw();
@@ -176,6 +213,7 @@ $(function() {
 	$('#ellipsebutton').click(function(){app.shapeFactory = function() {
 		return new Ellipse();
 	};});
+	$('#selectbutton').click(function(){app.shapeFactory = null;});
 	$('#clearbutton').click(function(){app.clear()});
 	$('#undobutton').click(function(){app.undo()});
 	$('#redobutton').click(function(){app.redo()});
