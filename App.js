@@ -100,10 +100,8 @@ function App(canvasSelector) {
 		self.newPage[index] = self.shapes;
 		index++;
 		self.shapes = self.newPage[index];
+		self.oldShapes = [];
 		self.redraw();
-
-		console.log("Length",self.newPage.length);
-		console.log("Index",index);
 	}
 
 	self.prevb = function() {
@@ -115,10 +113,7 @@ function App(canvasSelector) {
 			index--;
 			self.shapes = self.newPage[index];
 			self.redraw();
-
 		}
-
-
 	}
 	
 	self.setBrushColor = function(color) {
