@@ -7,8 +7,10 @@ var Square = Shape.extend({
 	draw: function(canvas) {
 		this.prepareDraw(canvas);
 		canvas.strokeRect(this.pos.x, this.pos.y, this.size.x, this.size.y);
+
 		if(this.fill) {
-			canvas.fill();
+
+			canvas.fillRect(this.pos.x, this.pos.y, this.size.x, this.size.y);
 		}
 		this.base(canvas);
 

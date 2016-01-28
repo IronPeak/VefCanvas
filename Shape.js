@@ -6,7 +6,7 @@ var Shape = Base.extend({
 		this.size = new Point(0,0);
 		this.brushColor = null;
 		this.fillColor = null;
-		this.fill = false;
+		this.fill = true;
 		this.selected = false;
 	},
 
