@@ -94,9 +94,11 @@ function App(canvasSelector) {
 			self.drawingStart(e);
 		} else {
 			for(var i = 0; i < self.shapes.length; i++) {
-				if(self.shapes[i].contains(self.getEventPoint(e))) {
-					self.movingStart(e, self.shapes[i]);
-					break;
+				if(self.shapes[i].active) {
+					if(self.shapes[i].contains(self.getEventPoint(e))) {
+						self.movingStart(e, self.shapes[i]);
+						break;
+					}
 				}
 			}
 		}
