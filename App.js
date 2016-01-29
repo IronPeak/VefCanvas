@@ -198,8 +198,9 @@ function App(canvasSelector) {
 
 	self.saveproject = function () {
 
-		var stringifiedArray = JSON.stringify(self.shapes);
-		var param = { "user": "helgie14", // You should use your own username!
+		var stringifiedArray = JSON.stringify({shapes: self.shapes, edits: self.edits});
+		var param = { 
+			"user": "helgie14",
 			"name": "mydrawing",
 			"content": stringifiedArray,
 			"template": false
@@ -213,12 +214,10 @@ function App(canvasSelector) {
 			dataType: "jsonp",
 			crossDomain: true,
 			success: function (data) {
-				// The save was successful...
-
 				console.log("Success Save");
 			},
 			error: function (xhr, err) {
-				// Something went wrong...
+				
 			}
 		});
 
