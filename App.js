@@ -195,6 +195,73 @@ function App(canvasSelector) {
 			self.redraw();
 		}
 	}
+
+	self.saveproject = function () {
+
+		var stringifiedArray = JSON.stringify(self.shapes);
+		var param = { "user": "helgie14", // You should use your own username!
+			"name": "mydrawing",
+			"content": stringifiedArray,
+			"template": false
+		};
+
+		$.ajax({
+			type: "POST",
+			contentType: "application/json; charset=utf-8",
+			url: "http://whiteboard.apphb.com/Home/save",
+			data: param,
+			dataType: "jsonp",
+			crossDomain: true,
+			success: function (data) {
+				// The save was successful...
+
+				console.log("Success Save");
+			},
+			error: function (xhr, err) {
+				// Something went wrong...
+			}
+		});
+
+	}
+
+	self.loadproject = function () {
+
+		 $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: "http://whiteboard.apphb.com/Home/save",
+                dataType: "jsonp",
+                crossDomain: true,
+                success: function (data) {
+                    var items = JSON.parse(data.WhiteboardContents);
+                    drawing.shapes.length = 0;
+                    for (var i = 0; i < items.length; i++){
+                        var func = eval(items[i].type);
+                        var obj;
+                        if(items[i].type === "Text") {
+                            obj = new func(items[i].x, items[i].y, items[i].color, items[i].thickness,
+                                items[i].text, items[i].font, items[i].size);
+                        }
+
+                        else {
+                            obj = new func(items[i].x, items[i].y, items[i].color, items[i].thickness);
+                            obj.endX = items[i].endX;
+                            obj.endY = items[i].endY;
+                            if(items[i].type === "Pen") {
+                                obj.clickX = items[i].clickX;
+                                obj.clickY = items[i].clickY;
+                            }
+                        }
+                        drawing.shapes.push(obj);
+                    }
+                    render();
+                },
+                error: function (xhr, err) {
+                    alert("error:\n" + xhr + "\n" + err);
+                }
+            });
+
+	}
 	
 	self.setBrushColor = function(color) {
 		self.brushColor = color;
@@ -265,6 +332,9 @@ $(function() {
 
 	$('#nextbutton').click(function(){app.nextb()});
 	$('#prevbutton').click(function(){app.prevb()});
+
+	$('#savebutton').click(function(){app.saveproject()});
+	$('#loadbutton').click(function(){app.loadproject()});
 
 	$('#brushcolor').change(function(){app.setBrushColor($(this).val())});
 	$('#fillcolor').change(function(){app.setFillColor($(this).val())});
