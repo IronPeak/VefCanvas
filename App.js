@@ -226,41 +226,7 @@ function App(canvasSelector) {
 
 	self.loadproject = function () {
 
-		 $.ajax({
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                url: "http://whiteboard.apphb.com/Home/save",
-                dataType: "jsonp",
-                crossDomain: true,
-                success: function (data) {
-                    var items = JSON.parse(data.WhiteboardContents);
-                    drawing.shapes.length = 0;
-                    for (var i = 0; i < items.length; i++){
-                        var func = eval(items[i].type);
-                        var obj;
-                        if(items[i].type === "Text") {
-                            obj = new func(items[i].x, items[i].y, items[i].color, items[i].thickness,
-                                items[i].text, items[i].font, items[i].size);
-                        }
-
-                        else {
-                            obj = new func(items[i].x, items[i].y, items[i].color, items[i].thickness);
-                            obj.endX = items[i].endX;
-                            obj.endY = items[i].endY;
-                            if(items[i].type === "Pen") {
-                                obj.clickX = items[i].clickX;
-                                obj.clickY = items[i].clickY;
-                            }
-                        }
-                        drawing.shapes.push(obj);
-                    }
-                    render();
-                },
-                error: function (xhr, err) {
-                    alert("error:\n" + xhr + "\n" + err);
-                }
-            });
-
+		
 	}
 	
 	self.setBrushColor = function(color) {
