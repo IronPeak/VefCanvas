@@ -120,7 +120,7 @@ function App(canvasSelector) {
 	
 	self.clear = function() {
 		self.shapes = [];
-
+		self.edits = [];
 		self.redraw();
 	}
 
@@ -173,9 +173,13 @@ function App(canvasSelector) {
 	}
 
 	self.nextb = function() {
-		self.newPage[index] = self.shapes;
+		self.newPage[index] = {shapes: self.shapes, edits: self.edits};
 		index++;
-		self.shapes = self.newPage[index];
+		if(self.newPage[index] === undefined) {
+			self.newPage[index] = {shapes: [], edits: []};
+		}
+		self.shapes = self.newPage[index].shapes;
+		self.edits = self.newPage[index].edits;
 		self.redraw();
 	}
 
@@ -184,9 +188,10 @@ function App(canvasSelector) {
 		if(index === 0) {
 		}
 		else {
-			self.newPage[index] = self.shapes;
+			self.newPage[index] = {shapes: self.shapes, edits: self.edits};
 			index--;
-			self.shapes = self.newPage[index];
+			self.shapes = self.newPage[index].shapes;
+			self.edits = self.newPage[index].edits;
 			self.redraw();
 		}
 	}
