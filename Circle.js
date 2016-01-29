@@ -1,39 +1,39 @@
-var Circle = Shape.extend ({
+var Circle = Shape.extend({
 
-	constructor: function() {
-		this.base("Circle");
-		this.radius = 0;
-	},
+    constructor: function() {
+        this.base("Circle");
+        this.radius = 0;
+    },
 
-	draw: function(canvas) {
-		this.prepareDraw(canvas);
-		canvas.beginPath();
-		canvas.arc(this.pos.x, this.pos.y, this.radius, 0, 2*Math.PI);
-		canvas.stroke();
-		if(this.fill) {
-			canvas.fill();
-		}
-		this.base(canvas);
-	},
+    draw: function(canvas) {
+        this.prepareDraw(canvas);
+        canvas.beginPath();
+        canvas.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
+        canvas.stroke();
+        if (this.fill) {
+            canvas.fill();
+        }
+        this.base(canvas);
+    },
 
-	drawing:function(point) {
-		this.size.x = Math.abs(point.x - this.pos.x);
-		this.size.y = Math.abs(point.y - this.pos.y);
-		
-		var x = this.size.x;
-		var y = this.size.y;
-		this.radius = Math.sqrt(x * x + y * y);
-	},
+    drawing: function(point) {
+        this.size.x = Math.abs(point.x - this.pos.x);
+        this.size.y = Math.abs(point.y - this.pos.y);
 
-	stopDrawing:function(point) {
-		this.drawing(point);
-	},
-	
-	contains: function(point) {
-		var deltaX = point.x - this.pos.x;
-		var deltaY = point.y - this.pos.y;
-		var sqrDistance = deltaX * deltaX + deltaY * deltaY;
-		return sqrDistance < this.radius * this.radius;
-	},
-	
+        var x = this.size.x;
+        var y = this.size.y;
+        this.radius = Math.sqrt(x * x + y * y);
+    },
+
+    stopDrawing: function(point) {
+        this.drawing(point);
+    },
+
+    contains: function(point) {
+        var deltaX = point.x - this.pos.x;
+        var deltaY = point.y - this.pos.y;
+        var sqrDistance = deltaX * deltaX + deltaY * deltaY;
+        return sqrDistance < this.radius * this.radius;
+    },
+
 });

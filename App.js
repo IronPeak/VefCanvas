@@ -104,7 +104,8 @@ function App(canvasSelector) {
     self.mousedown = function(e) {
         if (self.shapeFactory != null) {
             self.drawingStart(e);
-        } else {
+        }
+        else {
             for (var i = 0; i < self.shapes.length; i++) {
                 if (self.shapes[i].active) {
                     if (self.shapes[i].contains(self.getEventPoint(e))) {
@@ -202,8 +203,10 @@ function App(canvasSelector) {
     }
 
     self.prevb = function() {
-
-        if (index === 0) {} else {
+        if (index === 0) {
+			
+		}
+        else {
             self.newPage[index] = {
                 shapes: self.shapes,
                 edits: self.edits
@@ -242,22 +245,17 @@ function App(canvasSelector) {
 
             }
         });
-
     }
 
     self.loadproject = function() {
-
-
     }
 
     self.setBrushColor = function(color) {
         self.brushColor = color;
-
     }
 
     self.setFillColor = function(color) {
         self.fillColor = color;
-
     }
 
     self.setFillOption = function(checked) {
@@ -268,7 +266,6 @@ function App(canvasSelector) {
     self.setBrush = function(brush) {
         self.brush = brush;
     }
-
 
     self.init = function() {
         // Initialize App	
