@@ -156,8 +156,7 @@ function App(canvasSelector) {
         }
         if (edit.type == "Moved") {
             edit.active = false;
-            edit.shape.pos = edit.prevPos;
-            edit.shape.size = edit.prevSize;
+            edit.shape.moveTo(edit.prevPos);
         }
     }
 
@@ -180,8 +179,7 @@ function App(canvasSelector) {
         }
         if (edit.type == "Moved") {
             edit.active = true;
-            edit.shape.pos = edit.pos;
-            edit.shape.size = edit.size;
+            edit.shape.moveTo(edit.pos);
         }
     }
 

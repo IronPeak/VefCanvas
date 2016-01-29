@@ -31,11 +31,9 @@ var Square = Shape.extend({
     },
 
     moveTo: function(point) {
-        var x = Math.abs(this.pos.x + this.size.x) / 2;
-        var y = Math.abs(this.pos.y + this.size.y) / 2;
-        var middle = new Point(x, y);
-        this.pos = this.pos.add(point.subtract(middle));
-
+        var center = new Point(this.pos.x + this.size.x / 2, this.pos.y + this.size.y / 2);
+		var offset = center.subtract(point);
+		this.pos = this.pos.subtract(offset);
     },
 
     contains: function(point) {
