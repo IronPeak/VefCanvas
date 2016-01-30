@@ -30,11 +30,9 @@ var Line = Shape.extend({
     },
 
     moveTo: function(point) {
-        var x = (this.pos.x + this.size.x) / 2;
-        var y = (this.pos.y + this.size.y) / 2;
-        var lineMiddle = new Point(x, y);
-        this.pos = this.pos.add(point.subtract(lineMiddle));
-        this.size = this.size.add(point.subtract(lineMiddle));
+		var offset = point.subtract(this.pos);
+		this.size = this.size.add(offset);
+		this.pos = point;
         this.setDiameters();
     },
 

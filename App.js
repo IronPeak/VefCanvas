@@ -60,7 +60,7 @@ function App(canvasSelector) {
     }
 
     self.movingStart = function(e, object) {
-        var startPos = self.getEventPoint(e);
+        var startPos = object.pos;
         var startSize = object.size;
 
         var move = function(e) {
@@ -80,9 +80,7 @@ function App(canvasSelector) {
                 type: "Moved",
                 shape: object,
                 prevPos: startPos,
-                prevSize: startSize,
-                pos: object.pos,
-                size: object.size,
+                pos: pos,
                 active: true
             });
             // Remove drawing and drawingStop functions from the mouse events
