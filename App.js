@@ -250,6 +250,10 @@ function App(canvasSelector) {
             crossDomain: true,
             success: function(data) {
                 var dropdown = document.getElementById("projectlist");
+				var length = dropdown.options.length;
+				for(var i = length; i >= 0; i--) {
+					dropdown.remove(i);
+				}
 				for(var i = 0; i < data.length; i++) {
 					var option = document.createElement("option");
 					option.text = data[i].WhiteboardTitle;
