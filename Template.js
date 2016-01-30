@@ -35,6 +35,7 @@ var Template = Shape.extend({
 		if(obj.name === "Pen") {
 			shape = new Pen(0);
 		}
+		shape.reconstruct(obj);
 		return shape;
 	},
 

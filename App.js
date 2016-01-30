@@ -173,7 +173,9 @@ function App(canvasSelector) {
         }
         if (edit.type == "Moved") {
             edit.active = false;
-            self.findShape(edit.shapeID).moveTo(new Point(edit.prevX, edit.prevY));
+			var shape = self.findShape(edit.shapeID);
+			shape.startMove(shape.pos);
+            shape.moveTo(new Point(edit.prevX, edit.prevY));
         }
     }
 
@@ -196,7 +198,9 @@ function App(canvasSelector) {
         }
         if (edit.type == "Moved") {
             edit.active = true;
-            self.findShape(edit.shapeID).moveTo(new Point(edit.posX, edit.posY));
+			var shape = self.findShape(edit.shapeID);
+			shape.startMove(shape.pos);
+            shape.moveTo(new Point(edit.posX, edit.posY));
         }
     }
 	
@@ -334,6 +338,7 @@ function App(canvasSelector) {
 				self.parseToShape(shapeObjs);
 				self.edits = editObjs;
 				console.log(self.edits);
+				console.log(self.shapes);
 				self.redraw();
             },
             error: function(xhr, err) {
@@ -359,6 +364,9 @@ function App(canvasSelector) {
 			}
 			if(objs[i].name === "Pen") {
 				shape = new Pen(objs[i].ID);
+			}
+			if(objs[i].name === "Template") {
+				shape = new Template(objs[i].ID);
 			}
 			shape.reconstruct(objs[i]);
 			self.shapes.push(shape);
