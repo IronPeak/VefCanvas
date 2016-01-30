@@ -85,7 +85,6 @@ function App(canvasSelector) {
 				posY: pos.y,
                 active: true
             });
-            // Remove drawing and drawingStop functions from the mouse events
             self.canvas.off({
                 mousemove: move,
                 mouseup: moveStop
@@ -94,7 +93,6 @@ function App(canvasSelector) {
             self.redraw();
         }
 
-        // Add drawing and drawingStop functions to the mousemove and mouseup events
         self.canvas.on({
             mousemove: move,
             mouseup: moveStop
@@ -102,7 +100,6 @@ function App(canvasSelector) {
     }
 
     self.mousedown = function(e) {
-		$("input[name='tool']:checked").trigger("click");
         if (self.shapeFactory != null) {
             self.drawingStart(e);
         }
