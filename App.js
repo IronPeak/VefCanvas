@@ -58,22 +58,6 @@ function App(canvasSelector) {
             mouseup: drawingStop
         });
     }
-	
-	self.createTemplate = function() {
-		var template = new Template(0);
-		
-		for(var i = 0; i < self.shapes.length; i++) {
-			template.addShape(self.shapes[i]);
-		}
-		self.shapes = [];
-		self.shapes.push(template);
-		self.edits = [];
-		self.edits.push({
-            type: "Created",
-            shapeID: template.ID,
-            active: true
-        });
-	}
 
     self.movingStart = function(e, object) {
 		var startMove = self.getEventPoint(e);
@@ -335,7 +319,9 @@ function App(canvasSelector) {
 				var shapeObjs = JSON.parse(data.WhiteboardContents).shapes;
 				var editObjs = JSON.parse(data.WhiteboardContents).edits;
 				self.newBoard();
-				self.parseToShape(shapeObjs);
+				for(var i = 0; i < shapeObjs.length; i++) {
+					self.parseToShape(shapeObjs[i]);
+				}
 				self.edits = editObjs;
 				console.log(self.edits);
 				console.log(self.shapes);
@@ -347,31 +333,134 @@ function App(canvasSelector) {
         });
     }
 	
-	self.parseToShape = function(objs) {
-		for(var i = 0; i < objs.length; i++) {
-			var shape;
-			if(objs[i].name === "Square") {
-				shape = new Square(objs[i].ID);
+	self.gettemplatelist = function() {
+        var param = {
+            "user": "helgie14",
+            "template": true
+        };
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "http://whiteboard.apphb.com/Home/GetList",
+            data: param,
+            dataType: "jsonp",
+            crossDomain: true,
+            success: function(data) {
+                var dropdown = document.getElementById("templatelist");
+				var length = dropdown.options.length;
+				for(var i = length; i >= 0; i--) {
+					dropdown.remove(i);
+				}
+				for(var i = 0; i < data.length; i++) {
+					var option = document.createElement("option");
+					option.text = data[i].WhiteboardTitle;
+					option.value = data[i].ID;
+					dropdown.add(option);
+				}
+            },
+            error: function(xhr, err) {
+
+            }
+        });
+	}
+
+    self.savetemplate = function(name) {
+		var template = new Template(0);
+		
+		for(var i = 0; i < self.shapes.length; i++) {
+			if(self.shapes[i].active === true) {
+			    template.addShape(self.shapes[i]);
 			}
-			if(objs[i].name === "Line") {
-				shape = new Line(objs[i].ID);
-			}
-			if(objs[i].name === "Circle") {
-				shape = new Circle(objs[i].ID);
-			}
-			if(objs[i].name === "Ellipse") {
-				shape = new Ellipse(objs[i].ID);
-			}
-			if(objs[i].name === "Pen") {
-				shape = new Pen(objs[i].ID);
-			}
-			if(objs[i].name === "Template") {
-				shape = new Template(objs[i].ID);
-			}
-			shape.reconstruct(objs[i]);
-			self.shapes.push(shape);
-			self.shapeID++;
 		}
+		self.shapes = [];
+		self.shapes.push(template);
+		self.edits = [];
+		self.edits.push({
+            type: "Created",
+            shapeID: template.ID,
+            active: true
+        });
+		
+        var stringifiedArray = JSON.stringify(template);
+		
+        var param = {
+            "user": "helgie14",
+            "name": name,
+            "content": stringifiedArray,
+            "template": true
+        };
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "http://whiteboard.apphb.com/Home/save",
+            data: param,
+            dataType: "jsonp",
+            crossDomain: true,
+            success: function(data) {
+                self.gettemplatelist();
+				console.log("Saved Template");
+            },
+            error: function(xhr, err) {
+
+            }
+        });
+    }
+
+    self.loadtemplate = function(id) {
+        var param = {
+            "id": id,
+        };
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "http://whiteboard.apphb.com/Home/GetWhiteboard",
+            data: param,
+            dataType: "jsonp",
+            crossDomain: true,
+            success: function(data) {
+				console.log(data);
+				var shape = self.parseToShape(JSON.parse(data.WhiteboardContents));
+				self.edits.push({
+					type: "Created",
+					shapeID: shape.ID,
+					active: true
+				});
+				console.log("loaded template");
+				self.redraw();
+            },
+            error: function(xhr, err) {
+
+            }
+        });
+    }
+	
+	self.parseToShape = function(obj) {
+		var shape;
+		if(obj.name === "Square") {
+			shape = new Square(obj.ID);
+		}
+		if(obj.name === "Line") {
+			shape = new Line(obj.ID);
+		}
+		if(obj.name === "Circle") {
+			shape = new Circle(obj.ID);
+		}
+		if(obj.name === "Ellipse") {
+			shape = new Ellipse(obj.ID);
+		}
+		if(obj.name === "Pen") {
+			shape = new Pen(obj.ID);
+		}
+		if(obj.name === "Template") {
+			shape = new Template(obj.ID);
+		}
+		shape.reconstruct(obj);
+		self.shapes.push(shape);
+		self.shapeID++;
+		return shape;
 	}
 
     self.setBrushColor = function(color) {
@@ -414,6 +503,7 @@ function App(canvasSelector) {
     }
 	
 	self.getprojectlist();
+	self.gettemplatelist();
     self.init();
 }
 var app = null;
@@ -452,9 +542,6 @@ $(function() {
 				return new Pen(app.shapeID);
 			};
 		});
-		$('#createtemplate').click(function() {
-			app.createTemplate();
-		});
 		$('#selectbutton').click(function() {
 			app.shapeFactory = null;
 		});
@@ -474,7 +561,7 @@ $(function() {
 		$('#prevbutton').click(function() {
 			app.prevb()
 		});
-	
+		
 		$('#savebutton').click(function() {
 			var name = $("#projectname").val();
 			app.saveproject(name);
@@ -482,6 +569,15 @@ $(function() {
 		$('#loadbutton').click(function() {
 			var id = $("#projectlist option:selected").val();
 			app.loadproject(id);
+		});
+		
+		$('#savetemplatebutton').click(function() {
+			var name = $("#templatename").val();
+			app.savetemplate(name);
+		});
+		$('#loadtemplatebutton').click(function() {
+			var id = $("#templatelist option:selected").val();
+			app.loadtemplate(id);
 		});
 	
 		$('#brushcolor').change(function() {

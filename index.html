@@ -38,10 +38,12 @@
             <input type="range"  name="brush"  id="brushsize"  value="5"  min="0" max="20"> </input>
             <label for="brushsize">Brush Size</label> 
         </div>
+		<div>
         <input type="button" name="clearbutton" id="clearbutton" value="clear"></input>
         <input type="button" name="undobutton" id="undobutton" value="undo"></input>
         <input type="button" name="redobutton" id="redobutton" value="redo"></input>
         </div>
+		<div>
         <canvas id="canvas" height="500" width="500"></canvas>
         <input type="button" name="prevbutton" id="prevbutton" value="prev"></input>
         <input type="button" name="nextbutton" id="nextbutton" value="next"></input>
@@ -50,6 +52,13 @@
         <input type="button" name="loadbutton" id="loadbutton" value="load"></input>
 		<select id="projectlist">
 		</select>
-		<input type="button" name="createtemplate" id="createtemplate" value="template"></input>
+		</div>
+		<div>
+		<input type="button" name="savetemplatebutton" id="savetemplatebutton" value="save"></input>
+		<input type="text" id="templatename" placeholder="Template Name">
+        <input type="button" name="loadtemplatebutton" id="loadtemplatebutton" value="loadtemplate"></input>
+		<select id="templatelist">
+		</select>
+		</div>
     </body>
 </html>
