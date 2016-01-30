@@ -3,7 +3,7 @@ var Shape = Base.extend({
     constructor: function(ID, name) {
 		this.ID = ID;
         this.name = name;
-        this.pos = null;
+        this.pos = new Point(0, 0);
         this.size = new Point(0, 0);
         this.brushColor = null;
         this.fillColor = null;
@@ -47,8 +47,12 @@ var Shape = Base.extend({
         return false;
     },
 
+	startMove: function(point) {
+		this.posOffset = point.subtract(this.pos);
+	},
+	
     moveTo: function(point) {
-        this.pos = point;
+        this.pos = point.subtract(this.posOffset);
     },
 
     prepareDraw: function(canvas) {

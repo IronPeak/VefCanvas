@@ -29,10 +29,6 @@ var Square = Shape.extend({
         }
     },
 
-    moveTo: function(point) {
-		this.pos = point;
-    },
-
     contains: function(point) {
         return this.pos.x <= point.x && point.x <= (this.pos.x + this.size.x) && this.pos.y <= point.y && point.y <= (this.pos.y + this.size.y);
     },

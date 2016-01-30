@@ -58,11 +58,30 @@ function App(canvasSelector) {
             mouseup: drawingStop
         });
     }
+	
+	self.createTemplate = function() {
+		var template = new Template(0);
+		
+		for(var i = 0; i < self.shapes.length; i++) {
+			template.addShape(self.shapes[i]);
+		}
+		self.shapes = [];
+		self.shapes.push(template);
+		self.edits = [];
+		self.edits.push({
+            type: "Created",
+            shapeID: template.ID,
+            active: true
+        });
+	}
 
     self.movingStart = function(e, object) {
+		var startMove = self.getEventPoint(e);
         var startPos = object.pos;
         var startSize = object.size;
 
+		object.startMove(startMove);
+		
         var move = function(e) {
             var pos = self.getEventPoint(e);
 
@@ -81,8 +100,8 @@ function App(canvasSelector) {
                 shapeID: object.ID,
                 prevX: startPos.x,
 				prevY: startPos.y,
-                posX: pos.x,
-				posY: pos.y,
+                posX: object.pos.x,
+				posY: object.pos.y,
                 active: true
             });
             self.canvas.off({
@@ -424,6 +443,9 @@ $(function() {
 				app.shapeID += 1;
 				return new Pen(app.shapeID);
 			};
+		});
+		$('#createtemplate').click(function() {
+			app.createTemplate();
 		});
 		$('#selectbutton').click(function() {
 			app.shapeFactory = null;

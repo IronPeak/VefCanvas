@@ -44,7 +44,7 @@ var Pen = Shape.extend({
         this.updateDiameters(point.subtract(this.pos));
     },
 
-    startDrawing: function(point) {
+    stopDrawing: function(point) {
         this.drawPoints.push(point.subtract(this.pos));
         this.updateDiameters(point.subtract(this.pos));
     },
