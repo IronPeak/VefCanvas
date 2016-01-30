@@ -1,7 +1,7 @@
 var Line = Shape.extend({
 
-    constructor: function() {
-        this.base("Line");
+    constructor: function(ID) {
+        this.base(ID, "Line");
     },
 
     draw: function(canvas) {

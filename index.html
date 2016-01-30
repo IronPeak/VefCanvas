@@ -5,9 +5,8 @@
             #toolbar {background-color:silver;}
             #canvas {border:1px solid blue;display:block;}
         </style>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script type="text/javascript" src="Base.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-        <script type="text/javascript" src="App.js"></script>
         <script type="text/javascript" src="Point.js"></script>
         <script type="text/javascript" src="Shape.js"></script>
         <script type="text/javascript" src="Square.js"></script>
@@ -15,6 +14,7 @@
         <script type="text/javascript" src="Circle.js"></script>
         <script type="text/javascript" src="Ellipse.js"></script>
         <script type="text/javascript" src="Pen.js"></script>
+		<script type="text/javascript" src="App.js"></script>
     </head>
     <body>
         <div id="toolbar">
@@ -45,6 +45,9 @@
         <input type="button" name="prevbutton" id="prevbutton" value="prev"></input>
         <input type="button" name="nextbutton" id="nextbutton" value="next"></input>
         <input type="button" name="savebutton" id="savebutton" value="save"></input>
+		<input type="text" id="projectname" placeholder="Project Name">
         <input type="button" name="loadbutton" id="loadbutton" value="load"></input>
+		<select id="projectlist">
+		</select>
     </body>
 </html>

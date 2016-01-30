@@ -1,9 +1,14 @@
 var Circle = Shape.extend({
 
-    constructor: function() {
-        this.base("Circle");
+    constructor: function(ID) {
+        this.base(ID, "Circle");
         this.radius = 0;
     },
+	
+	reconstruct: function(obj) {
+		this.base(obj);
+		this.radius = obj.radius;
+	},
 
     draw: function(canvas) {
         this.prepareDraw(canvas);

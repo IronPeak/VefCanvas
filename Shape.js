@@ -1,6 +1,7 @@
 var Shape = Base.extend({
 
-    constructor: function(name) {
+    constructor: function(ID, name) {
+		this.ID = ID;
         this.name = name;
         this.pos = null;
         this.size = new Point(0, 0);
@@ -9,6 +10,16 @@ var Shape = Base.extend({
         this.fill = false;
         this.active = true;
     },
+	
+	reconstruct: function(obj) {
+		this.active = obj.active;
+		this.brushColor = obj.brushColor;
+		this.fill = obj.fill;
+		this.fillColor = obj.fillColor;
+		this.brush = obj.brush;
+		this.pos = new Point(obj.pos.x, obj.pos.y);
+		this.size = new Point(obj.size.x, obj.size.y);
+	},
 
     draw: function(canvas) {
         if (this.selected === true) {

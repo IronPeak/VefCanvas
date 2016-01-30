@@ -38,7 +38,7 @@ function App(canvasSelector) {
             self.shapes.push(shape);
             self.edits.push({
                 type: "Created",
-                shape: shape,
+                shapeID: shape.ID,
                 active: true
             });
             shape.added(self.canvasContext);
@@ -78,9 +78,11 @@ function App(canvasSelector) {
 
             self.edits.push({
                 type: "Moved",
-                shape: object,
-                prevPos: startPos,
-                pos: pos,
+                shapeID: object.ID,
+                prevX: startPos.x,
+				prevY: startPos.y,
+                posX: pos.x,
+				posY: pos.y,
                 active: true
             });
             // Remove drawing and drawingStop functions from the mouse events
@@ -100,6 +102,7 @@ function App(canvasSelector) {
     }
 
     self.mousedown = function(e) {
+		$("input[name='tool']:checked").trigger("click");
         if (self.shapeFactory != null) {
             self.drawingStart(e);
         }
@@ -150,11 +153,11 @@ function App(canvasSelector) {
     self.undoEdit = function(edit) {
         if (edit.type == "Created") {
             edit.active = false;
-            edit.shape.active = false;
+            self.findShape(edit.shapeID).active = false;
         }
         if (edit.type == "Moved") {
             edit.active = false;
-            edit.shape.moveTo(edit.prevPos);
+            self.findShape(edit.shapeID).moveTo(new Point(edit.prevX, edit.prevY));
         }
     }
 
@@ -173,13 +176,21 @@ function App(canvasSelector) {
     self.redoEdit = function(edit) {
         if (edit.type == "Created") {
             edit.active = true;
-            edit.shape.active = true;
+            self.findShape(edit.shapeID).active = true;
         }
         if (edit.type == "Moved") {
             edit.active = true;
-            edit.shape.moveTo(edit.pos);
+            self.findShape(edit.shapeID).moveTo(new Point(edit.posX, edit.posY));
         }
     }
+	
+	self.findShape = function(shapeID) {
+		for(var i = 0; i < self.shapes.length; i++) {
+			if(self.shapes[i].ID == shapeID) {
+				return self.shapes[i];
+			}
+		}
+	}
 
     self.nextb = function() {
         self.newPage[index] = {
@@ -188,15 +199,28 @@ function App(canvasSelector) {
         };
         index++;
         if (self.newPage[index] === undefined) {
-            self.newPage[index] = {
-                shapes: [],
-                edits: []
-            };
+            self.newBoard();
+			return;
         }
         self.shapes = self.newPage[index].shapes;
         self.edits = self.newPage[index].edits;
         self.redraw();
     }
+	
+	self.newBoard = function() {
+		self.newPage[index] = {
+            shapes: self.shapes,
+            edits: self.edits
+        };
+		index = self.newPage.length;
+		self.newPage[index] = {
+            shapes: [],
+            edits: []
+        };
+		self.shapes = self.newPage[index].shapes;
+        self.edits = self.newPage[index].edits;
+        self.redraw();
+	}
 
     self.prevb = function() {
         if (index === 0) {
@@ -213,16 +237,43 @@ function App(canvasSelector) {
             self.redraw();
         }
     }
+	
+	self.getprojectlist = function() {
+        var param = {
+            "user": "helgie14",
+            "template": false
+        };
 
-    self.saveproject = function() {
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "http://whiteboard.apphb.com/Home/GetList",
+            data: param,
+            dataType: "jsonp",
+            crossDomain: true,
+            success: function(data) {
+                var dropdown = document.getElementById("projectlist");
+				for(var i = 0; i < data.length; i++) {
+					var option = document.createElement("option");
+					option.text = data[i].WhiteboardTitle;
+					option.value = data[i].ID;
+					dropdown.add(option);
+				}
+            },
+            error: function(xhr, err) {
 
+            }
+        });
+	}
+
+    self.saveproject = function(name) {
         var stringifiedArray = JSON.stringify({
             shapes: self.shapes,
             edits: self.edits
         });
         var param = {
             "user": "helgie14",
-            "name": "mydrawing",
+            "name": name,
             "content": stringifiedArray,
             "template": false
         };
@@ -235,7 +286,8 @@ function App(canvasSelector) {
             dataType: "jsonp",
             crossDomain: true,
             success: function(data) {
-                console.log("Success Save");
+                self.getprojectlist();
+				console.log("Saved");
             },
             error: function(xhr, err) {
 
@@ -243,8 +295,56 @@ function App(canvasSelector) {
         });
     }
 
-    self.loadproject = function() {
+    self.loadproject = function(id) {
+        var param = {
+            "id": id,
+        };
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "http://whiteboard.apphb.com/Home/GetWhiteboard",
+            data: param,
+            dataType: "jsonp",
+            crossDomain: true,
+            success: function(data) {
+				var shapeObjs = JSON.parse(data.WhiteboardContents).shapes;
+				var editObjs = JSON.parse(data.WhiteboardContents).edits;
+				self.newBoard();
+				self.parseToShape(shapeObjs);
+				self.edits = editObjs;
+				console.log(self.edits);
+				self.redraw();
+            },
+            error: function(xhr, err) {
+
+            }
+        });
     }
+	
+	self.parseToShape = function(objs) {
+		for(var i = 0; i < objs.length; i++) {
+			var shape;
+			if(objs[i].name === "Square") {
+				shape = new Square(objs[i].ID);
+			}
+			if(objs[i].name === "Line") {
+				shape = new Line(objs[i].ID);
+			}
+			if(objs[i].name === "Circle") {
+				shape = new Circle(objs[i].ID);
+			}
+			if(objs[i].name === "Ellipse") {
+				shape = new Ellipse(objs[i].ID);
+			}
+			if(objs[i].name === "Pen") {
+				shape = new Pen(objs[i].ID);
+			}
+			shape.reconstruct(objs[i]);
+			self.shapes.push(shape);
+			self.shapeID++;
+		}
+	}
 
     self.setBrushColor = function(color) {
         self.brushColor = color;
@@ -275,6 +375,7 @@ function App(canvasSelector) {
         self.shapes = new Array();
         self.newPage = new Array();
         self.edits = new Array();
+		self.shapeID = 0;
 
         // Set defaults
         self.brushColor = $('input[id=brushcolor]').val();
@@ -283,75 +384,86 @@ function App(canvasSelector) {
         self.brush = $('input[id=brushsize]').val();;
         self.index = index = 0;
     }
-
+	
+	self.getprojectlist();
     self.init();
 }
 var app = null;
 $(function() {
-    // Wire up events
+    WireEvents();
     app = new App('#canvas');
-    $('#squarebutton').click(function() {
-        app.shapeFactory = function() {
-            return new Square();
-        };
-    });
-    $('#linebutton').click(function() {
-        app.shapeFactory = function() {
-            return new Line();
-        };
-    });
-    $('#circlebutton').click(function() {
-        app.shapeFactory = function() {
-            return new Circle();
-        };
-    });
-    $('#ellipsebutton').click(function() {
-        app.shapeFactory = function() {
-            return new Ellipse();
-        };
-    });
-    $('#penbutton').click(function() {
-        app.shapeFactory = function() {
-            return new Pen();
-        };
-    });
-    $('#selectbutton').click(function() {
-        app.shapeFactory = null;
-    });
-    $('#clearbutton').click(function() {
-        app.clear()
-    });
-    $('#undobutton').click(function() {
-        app.undo()
-    });
-    $('#redobutton').click(function() {
-        app.redo()
-    });
-
-    $('#nextbutton').click(function() {
-        app.nextb()
-    });
-    $('#prevbutton').click(function() {
-        app.prevb()
-    });
-
-    $('#savebutton').click(function() {
-        app.saveproject()
-    });
-    $('#loadbutton').click(function() {
-        app.loadproject()
-    });
-
-    $('#brushcolor').change(function() {
-        app.setBrushColor($(this).val())
-    });
-    $('#fillcolor').change(function() {
-        app.setFillColor($(this).val())
-    });
-    $('#fillshapes').click(function() {
-        app.setFillOption(this.checked)
-    });
-    $('#brushsize').change(function() {
-        app.setBrush($(this).val())
-    });
+	
+	function WireEvents() {
+		$('#squarebutton').click(function() {
+			app.shapeFactory = function() {
+				app.shapeID += 1;
+				return new Square(app.shapeID);
+			};
+		});
+		$('#linebutton').click(function() {
+			app.shapeFactory = function() {
+				app.shapeID += 1;
+				return new Line(app.shapeID);
+			};
+		});
+		$('#circlebutton').click(function() {
+			app.shapeFactory = function() {
+				app.shapeID += 1;
+				return new Circle(app.shapeID);
+			};
+		});
+		$('#ellipsebutton').click(function() {
+			app.shapeFactory = function() {
+				app.shapeID += 1;
+				return new Ellipse(app.shapeID);
+			};
+		});
+		$('#penbutton').click(function() {
+			app.shapeFactory = function() {
+				app.shapeID += 1;
+				return new Pen(app.shapeID);
+			};
+		});
+		$('#selectbutton').click(function() {
+			app.shapeFactory = null;
+		});
+		$('#clearbutton').click(function() {
+			app.clear()
+		});
+		$('#undobutton').click(function() {
+			app.undo()
+		});
+		$('#redobutton').click(function() {
+			app.redo()
+		});
+	
+		$('#nextbutton').click(function() {
+			app.nextb()
+		});
+		$('#prevbutton').click(function() {
+			app.prevb()
+		});
+	
+		$('#savebutton').click(function() {
+			var name = $("#projectname").val();
+			app.saveproject(name);
+		});
+		$('#loadbutton').click(function() {
+			var id = $("#projectlist option:selected").val();
+			app.loadproject(id);
+		});
+	
+		$('#brushcolor').change(function() {
+			app.setBrushColor($(this).val())
+		});
+		$('#fillcolor').change(function() {
+			app.setFillColor($(this).val())
+		});
+		$('#fillshapes').click(function() {
+			app.setFillOption(this.checked)
+		});
+		$('#brushsize').change(function() {
+			app.setBrush($(this).val())
+		});
+	}
 });

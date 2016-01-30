@@ -1,7 +1,7 @@
 var Ellipse = Shape.extend({
 
-    constructor: function() {
-        this.base("Ellipse");
+    constructor: function(ID) {
+        this.base(ID, "Ellipse");
     },
 
     draw: function(canvas) {
