@@ -1,91 +1,124 @@
 <html>
-    <head>
-        <title>JS-Draw</title>
-        
-         <link rel="stylesheet" type="text/css" href="main.css">
-		<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-        <script type="text/javascript" src="Base.js"></script>
-        <script type="text/javascript" src="Point.js"></script>
-        <script type="text/javascript" src="Shape.js"></script>
-        <script type="text/javascript" src="Square.js"></script>
-        <script type="text/javascript" src="Line.js"></script>
-        <script type="text/javascript" src="Circle.js"></script>
-        <script type="text/javascript" src="Ellipse.js"></script>
-        <script type="text/javascript" src="Pen.js"></script>
-		<script type="text/javascript" src="Template.js"></script>
-		<script type="text/javascript" src="App.js"></script>
-        <script type="text/javascript" src="Text.js"></script>
-        <script type="text/javascript" src="Eraser.js"></script>
-    </head>
-    <body>
-        <div id="toolbar">
-        <label for="toolbar">Tools</label>
-        <select id ="tools" name="tool">
-        	<option value="Square">Square</option>
-        	<option value="Line">Line</option>
-        	<option value="Circle">Circle</option>
-        	<option value="Ellipse">Ellipse</option>
-        	<option value="Pen">Pen</option>
-        	<option value="Text">Text</option>
-        	<option value="Select">Select</option>
-        	<option value="Eraser">Eraser</option>
-        </select>
-           
-            <input type="color" name="color" id="brushcolor" value="#000000"></input>
-            <input type="color" name="color" id="fillcolor" value="#000000"></input>
-            <input type="checkbox" name="tool" id="fillshapes" value="fill"> </input>
-            <label for="fillshapes">Fill</label>
-            <input type="range"  name="brush"  id="brushsize"  value="5"  min="0" max="20"> </input>
-            <label for="brushsize">Brush Size</label>
-        <div>
-            <label for="fontSize">Font Size</label>
-            <select id="fontSize" name="fontS">
-                <option value="8" >8</option>
-                <option value="16" selected="selected">16</option>
-                <option value="24">24</option>
-                <option value="32">32</option>
-            </select>
-            <label for="fontfamily">Font</label>
-            <select id="fontfamily" name="font">
-                <option value="Arial" selected="selected">Arial</option>
-                <option value="Times New Roman">Times New Roman</option>
-                <option value="serif">serif</option>
-                <option value="Courier New">Courier New</option>
-            </select>
-        </div>
+<head>
+    <title>JS-Draw</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="Base.js"></script>
+    <script type="text/javascript" src="Point.js"></script>
+    <script type="text/javascript" src="Shape.js"></script>
+    <script type="text/javascript" src="Square.js"></script>
+    <script type="text/javascript" src="Line.js"></script>
+    <script type="text/javascript" src="Circle.js"></script>
+    <script type="text/javascript" src="Ellipse.js"></script>
+    <script type="text/javascript" src="Pen.js"></script>
+	<script type="text/javascript" src="Template.js"></script>
+	<script type="text/javascript" src="App.js"></script>
+    <script type="text/javascript" src="Text.js"></script>
+    <script type="text/javascript" src="Eraser.js"></script>
+</head>
+<body>
 
-
-        </div>
-		<div>
-        <input type="button" name="clearbutton" id="clearbutton" value="clear"></input>
-        <input type="button" name="undobutton" id="undobutton" value="undo"></input>
-        <input type="button" name="redobutton" id="redobutton" value="redo"></input>
-        </div>
-		<div class ="canv">
-        <canvas id="canvas" height="500" width="810"></canvas>
-        </div>
-
-	    <div class ="prevbutton">
-	        <input type="button" name="prevbutton" id="prevbutton" value="prev"></input>
-	        <p id ="pagenumber">Page number: </p>
-	    </div>
-    	<div class ="nextbutton">
-    	    <input type="button" name="nextbutton" id="nextbutton" value="next"></input>
-		</div>        
-        <input type="button" name="savebutton" id="savebutton" value="save"></input>
-		<input type="text" id="projectname" placeholder="Project Name">
-        <input type="button" name="loadbutton" id="loadbutton" value="load"></input>
-		<select id="projectlist">
-		</select>
+<div class="container">
+	<div class=pghead>
+		HEAD
+	</div>
+	<div class=pgbody>
+		<div class=pgbodyleft>
+			BODY LEFT
 		</div>
-		<div>
-		<input type="button" name="savetemplatebutton" id="savetemplatebutton" value="save"></input>
-		<input type="text" id="templatename" placeholder="Template Name">
-        <input type="button" name="loadtemplatebutton" id="loadtemplatebutton" value="loadtemplate"></input>
-		<select id="templatelist">
-		</select>
+		<div class=pgbodycanvas>
+			BODY Canvas
 		</div>
-        <div class="text-spawner"></div>
+		<div class=pgbodyright>
+			BODY RIGHT
+		</div>
+	</div>
+	<div class=pgfoother>
+		<div class=pgfooterleft>
+			FOOTER LEFT
+		</div>
+		<div class=pgfooterpage>
+			FOOTER PAGE
+		</div>
+		<div class=pgfooterright>
+			FOOTER RIGHT
+		</div>
+	</div>
+</div>
 
-    </body>
+
+
+<div class="container">
+    <div id="toolbar">
+		<label for="toolbar">Tools</label>
+		<select id ="tools" name="tool">
+			<option value="Square">Square</option>
+			<option value="Line">Line</option>
+			<option value="Circle">Circle</option>
+			<option value="Ellipse">Ellipse</option>
+			<option value="Pen">Pen</option>
+			<option value="Text">Text</option>
+			<option value="Select">Select</option>
+			<option value="Eraser">Eraser</option>
+		</select>
+		
+		<input type="color" name="color" id="brushcolor" value="#000000"></input>
+		<input type="color" name="color" id="fillcolor" value="#000000"></input>
+		<input type="checkbox" name="tool" id="fillshapes" value="fill"> </input>
+		<label for="fillshapes">Fill</label>
+		<input type="range"  name="brush"  id="brushsize"  value="5"  min="0" max="20"> </input>
+		<label for="brushsize">Brush Size</label>
+		
+		<div>
+			<label for="fontSize">Font Size</label>
+			<select id="fontSize" name="fontS">
+				<option value="8" >8</option>
+				<option value="16" selected="selected">16</option>
+				<option value="24">24</option>
+				<option value="32">32</option>
+			</select>
+			<label for="fontfamily">Font</label>
+			<select id="fontfamily" name="font">
+				<option value="Arial" selected="selected">Arial</option>
+				<option value="Times New Roman">Times New Roman</option>
+				<option value="serif">serif</option>
+				<option value="Courier New">Courier New</option>
+			</select>
+		</div>
+    </div>
+	
+	
+	<div>
+    <input type="button" name="clearbutton" id="clearbutton" value="clear"></input>
+    <input type="button" name="undobutton" id="undobutton" value="undo"></input>
+    <input type="button" name="redobutton" id="redobutton" value="redo"></input>
+    </div>
+	<div class ="canv">
+    <canvas id="canvas" height="500" width="810"></canvas>
+    </div>
+
+    <div class ="prevbutton">
+        <input type="button" name="prevbutton" id="prevbutton" value="prev"></input>
+        <p id ="pagenumber">Page number: </p>
+    </div>
+	<div class ="nextbutton">
+	    <input type="button" name="nextbutton" id="nextbutton" value="next"></input>
+	</div>        
+    <input type="button" name="savebutton" id="savebutton" value="save"></input>
+	<input type="text" id="projectname" placeholder="Project Name">
+    <input type="button" name="loadbutton" id="loadbutton" value="load"></input>
+	<select id="projectlist">
+	</select>
+	</div>
+	<div>
+	<input type="button" name="savetemplatebutton" id="savetemplatebutton" value="save"></input>
+	<input type="text" id="templatename" placeholder="Template Name">
+    <input type="button" name="loadtemplatebutton" id="loadtemplatebutton" value="loadtemplate"></input>
+	<select id="templatelist">
+	</select>
+	</div>
+    <div class="text-spawner"></div>
+</div>
+</body>
 </html>
