@@ -11,7 +11,7 @@ var Text = Shape.extend({
     },
 	
 	prepareDraw(canvas) {
-		canvas.font = this.fontSize + "px " + this.font;
+		canvas.font = this.fontSize + " " + this.font;
 		canvas.fillStyle = this.brushColor;
 	},
 });
