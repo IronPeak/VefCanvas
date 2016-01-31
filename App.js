@@ -563,42 +563,49 @@ $(function() {
 			if($(this).val() == "Circle") {
 				app.shapeFactory = function() {
 					app.shapeID += 1;
+					$("#toolselectimage").attr("src", "images/circle.jpg");
 					return new Circle(app.shapeID);
 				};
 			}
 			else if($(this).val() == "Ellipse") {
 				app.shapeFactory = function() {
 					app.shapeID += 1;
+					$("#toolselectimage").attr("src", "images/ellipse.jpg");
 					return new Ellipse(app.shapeID);
 				};
 			}
 			else if($(this).val() == "Eraser") {
 				app.shapeFactory = function() {
 					app.shapeID += 1;
+					$("#toolselectimage").attr("src", "images/eraser.jpg");
 					return new Eraser(app.shapeID);
 				};
 			}
 			else if($(this).val() == "Line") {
 				app.shapeFactory = function() {
 					app.shapeID += 1;
+					$("#toolselectimage").attr("src", "images/line.jpg");
 					return new Line(app.shapeID);
 				};
 			}
 			else if($(this).val() == "Pen") {
 				app.shapeFactory = function() {
 					app.shapeID += 1;
+					$("#toolselectimage").attr("src", "images/pen.jpg");
 					return new Pen(app.shapeID);
 				};
 			}
 			else if($(this).val() == "Square") {
 				app.shapeFactory = function() {
 					app.shapeID += 1;
+					$("#toolselectimage").attr("src", "images/square.jpg");
 					return new Square(app.shapeID);
 				};
 			}
 			else if($(this).val() == "Text") {
 				app.shapeFactory = function() {
 					app.shapeID += 1;
+					$("#toolselectimage").attr("src", "images/text.jpg");
 					return new Text(app.shapeID);
 				};
 			}
