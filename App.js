@@ -281,7 +281,7 @@ function App(canvasSelector) {
 	
 	self.getprojectlist = function() {
         var param = {
-            "user": "helgie14",
+            "user": "hrafnh14",
             "template": false
         };
 
@@ -317,7 +317,7 @@ function App(canvasSelector) {
             edits: self.edits
         });
         var param = {
-            "user": "helgie14",
+            "user": "hrafnh14",
             "name": name,
             "content": stringifiedArray,
             "template": false
@@ -372,7 +372,7 @@ function App(canvasSelector) {
 	
 	self.gettemplatelist = function() {
         var param = {
-            "user": "helgie14",
+            "user": "hrafnh14",
             "template": true
         };
 
@@ -422,7 +422,7 @@ function App(canvasSelector) {
         var stringifiedArray = JSON.stringify(template);
 		
         var param = {
-            "user": "helgie14",
+            "user": "hrafnh14",
             "name": name,
             "content": stringifiedArray,
             "template": true
