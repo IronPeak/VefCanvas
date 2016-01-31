@@ -4,7 +4,9 @@ function App(canvasSelector) {
         return new Point(e.pageX - self.canvasOffset.x, e.pageY - self.canvasOffset.y);
     }
     global = {
-        textype : ""
+        textype : "",
+        textX: 0,
+        textY: 0
     };
     self.drawingStart = function(e) {
         var startPos = self.getEventPoint(e);
@@ -121,12 +123,13 @@ function App(canvasSelector) {
            self.inputBox.css("position", "absolute");
            self.inputBox.css("top", event.pageY);
            self.inputBox.css("left", event.pageX);
-
+           global.textX = event.pageX;
+           global.textY = event.pageY - 60;
            $(".text-spawner").append(self.inputBox);
             self.inputBox.focus();
         }
 
-        else if (self.shapeFactory != null) {
+        if (self.shapeFactory != null) {
             self.drawingStart(e);
         }
         else {
@@ -147,11 +150,10 @@ function App(canvasSelector) {
         if(event.which === 13) {
             if(self.inputBox) {
                 global.textype = self.inputBox.val();
-
                 self.inputBox.remove();
+                
+                return new Text(app.shapeID).draw(self.canvasContext);
 
-                return new Text(app.shapeID);
-            
             }
         }
 
@@ -553,7 +555,7 @@ function App(canvasSelector) {
         self.inputBox = null;
         self.fontSize = "16pt";
         self.font = "Arial";
-        self.text = "123";
+        self.text = " ";
 
         
     }   
@@ -599,7 +601,9 @@ $(function() {
 			};
 		});
         $('#textbutton').click(function() {
-            
+            app.shapeFactory = function() {
+                app.shapeID += 1;
+            };
         });
         $('#eraserbutton').click(function() {
             app.shapeFactory = function() {

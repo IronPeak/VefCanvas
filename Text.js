@@ -8,10 +8,10 @@ var Text = Shape.extend({
     },
 
     draw: function(canvas) {
-        //this.prepareDraw(canvas);
+        this.prepareDraw(canvas);
 
-        canvas.fillText("g", 100, 150);
-        //this.base(canvas);
+        canvas.fillText(global.textype, global.textX, global.textY);
+        this.base(canvas);
     },
 
 });
