@@ -9,9 +9,6 @@ var Shape = Base.extend({
         this.fillColor = null;
         this.fill = false;
         this.active = true;
-        this.fontSize = null;
-        this.font = null;
-        this.text = global.textype;
     },
 	
 	reconstruct: function(obj) {

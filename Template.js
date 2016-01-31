@@ -35,6 +35,12 @@ var Template = Shape.extend({
 		if(obj.name === "Pen") {
 			shape = new Pen(0);
 		}
+		if(obj.name === "Template") {
+			shape = new Template(0);
+		}
+		if(obj.name === "Text") {
+			shape = new Text(0);
+		}
 		shape.reconstruct(obj);
 		return shape;
 	},
