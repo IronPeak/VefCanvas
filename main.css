@@ -81,23 +81,26 @@
 }
 
 #prevbutton {
-background: url('/images/leftarrow.jpg') no-repeat 0 0;
+background: transparent url('/images/leftarrow.jpg') no-repeat 0 0;
+height: 125px;
+width: 123px;
+border: 0;
+
+
+
+}
+#nextbutton {
+background: transparent url('/images/rightarrow.jpg') no-repeat 0 0;
 height: 125px;
 width: 123px;
 border: 0;
 
 }
-#nextbutton {
-background: url('/images/rightarrow.jpg') no-repeat 0 0;
-height: 125px;
-width: 126px;
-border: 0;
- 
-}
 
 body {
 
-  background-image: url("/images/bg.jpg");
+ background-color: rgb(255,255,255);
+
 }
 
 
