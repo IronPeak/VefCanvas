@@ -150,7 +150,7 @@ function App(canvasSelector) {
 
                 self.inputBox.remove();
 
-                return new Text(app.shapeID).draw();
+                return new Text(app.shapeID);
             
             }
         }

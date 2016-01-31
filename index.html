@@ -16,6 +16,8 @@
         <script type="text/javascript" src="Pen.js"></script>
 		<script type="text/javascript" src="Template.js"></script>
 		<script type="text/javascript" src="App.js"></script>
+        <script type="text/javascript" src="Text.js"></script>
+        <script type="text/javascript" src="Eraser.js"></script>
     </head>
     <body>
         <div id="toolbar">
@@ -29,14 +31,36 @@
             <label for="ellipsebutton">Ellipse</label>
             <input type="radio" name="tool" id="penbutton" value="pen"> </input>
             <label for="penbutton">Pen</label>
+            <input type="radio" name="tool" id="textbutton" value="text"> </input>
+            <label for="textbutton">Text</label>
             <input type="radio" name="tool" id="selectbutton" value="select"> </input>
             <label for="selectbutton">Select</label>
+            <input type="radio" name="tool" id="eraserbutton" value="select"> </input>
+            <label for="eraserbutton">Eraser</label>
             <input type="color" name="color" id="brushcolor" value="#000000"></input>
             <input type="color" name="color" id="fillcolor" value="#000000"></input>
             <input type="checkbox" name="tool" id="fillshapes" value="fill"> </input>
             <label for="fillshapes">Fill</label>
             <input type="range"  name="brush"  id="brushsize"  value="5"  min="0" max="20"> </input>
-            <label for="brushsize">Brush Size</label> 
+            <label for="brushsize">Brush Size</label>
+        <div>
+            <label for="fontSize">Font Size</label>
+            <select id="fontSize" name="fontS">
+                <option value="8" >8</option>
+                <option value="16" selected="selected">16</option>
+                <option value="24">24</option>
+                <option value="32">32</option>
+            </select>
+            <label for="fontfamily">Font</label>
+            <select id="fontfamily" name="font">
+                <option value="Arial" selected="selected">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="serif">serif</option>
+                <option value="Courier New">Courier New</option>
+            </select>
+        </div>
+
+
         </div>
 		<div>
         <input type="button" name="clearbutton" id="clearbutton" value="clear"></input>
@@ -60,5 +84,7 @@
 		<select id="templatelist">
 		</select>
 		</div>
+        <div class="text-spawner"></div>
+
     </body>
 </html>
