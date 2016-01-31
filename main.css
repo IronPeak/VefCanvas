@@ -34,7 +34,7 @@
 .pgbodyleft {
   margin: 0px;
   display: inline-block;
-  width: 14%;
+  width: 160px;
   text-align: center;
   vertical-align: top;
 }
@@ -42,7 +42,7 @@
 .pgbodycanvas {
   margin: 0px;
   display: inline-block;
-  width: 70%;
+  width: 810px;
   text-align: center;
   vertical-align: top;
 }
@@ -50,40 +50,40 @@
 .pgbodyright {
   margin: 0px;
   display: inline-block;
-  width: 14%;
+  width: 160px;
   text-align: center;
   vertical-align: top;
 }
 
 .pgbodylefttop {
   padding-top: 25px;
-  height: 25%;
+  height: 225px;
   vertical-align: top;
 }
 
 .pgbodyleftmid {
-  height: 25%;
+  height: 100px;
   vertical-align: top;
 }
 
 .pgbodyleftbottom {
-  height: 25%;
+  height: 170px;
   vertical-align: top;
 }
 
 .pgbodyrighttop {
   padding-top: 25px;
-  height: 25%;
+  height: 225px;
   vertical-align: top;
 }
 
 .pgbodyrightmid {
-  height: 25%;
+  height: 100px;
   vertical-align: top;
 }
 
 .pgbodyrightbottom {
-  height: 25%;
+  height: 170px;
   vertical-align: top;
 }
 
@@ -97,6 +97,8 @@
 }
 
 .pgfooter {
+	padding-top: 10px;
+	vertical-align: top;
 	text-align: center;
 	font-size: 16pt;
 }
