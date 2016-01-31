@@ -1,7 +1,5 @@
-
 .canv {
-
-	   height: 500;
+	height: 500;
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
@@ -10,23 +8,16 @@
     border:1px
     solid blue;
     display:block;
-
 }
 
 .nextbutton {
 position: absolute;
 left: 900px;
- 
-
 }
 
 .prevbutton {
   position: absolute;
-    left: 500px;
-     
-
-   
-
+  left: 500px;
 }
 #toolbar {
   background-color:silver;
@@ -37,4 +28,25 @@ left: 900px;
     left: 170px;
     bottom: -20px;
     width: 100px;
+}
+
+.pgbodyleft {
+	margin: 0px;
+	float: left;
+	width: 15%;
+	text-align: center;
+}
+
+.pgbodycanvas {
+	margin: 0px;
+	float: left;
+	width: 70%;
+	text-align: center;
+}
+
+.pgbodyright {
+	margin: 0px;
+	float: left;
+	width: 15%;
+	text-align: center;
 }
