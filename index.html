@@ -37,19 +37,20 @@
 			<label for="fillshapes">Fill</label>
 		</div>
 		<div class=pgheadmid>
-			<img id ="toolselectimage" src="images/text.jpg" /> 123
+			<img id ="toolselectimage" src="images/text.jpg" />
 		</div>
 
 		<div class=pgheadright>
-		<label for="brushcolor">Brush Color</label>
+			<div class=brushsize>
+			<label for="brushsize">Size</label>
+			<input type="range"  name="brush"  id="brushsize"  value="5"  min="1" max="10"> </input>
+			</div>
+			<br/>
+			<label for="brushcolor">Brush Color</label>
 			<input type="color" name="color" id="brushcolor" value="#000000"></input>
-		<label for="fillcolor">Fill Color</label>
+			<br/>
+			<label for="fillcolor">Fill Color</label>
 			<input type="color" name="color" id="fillcolor" value="#000000"></input>
-		<div class=brushs>
-			<input type="range"  name="brush"  id="brushsize"  value="5"  min="0" max="20"> </input>
-			<label for="brushsize">Brush Size</label>
-		</div>
-			
 		</div>
 	</div>
 		
@@ -75,7 +76,7 @@
 
 		<div class=pgbodycanvas>
 		
-    		<canvas id="canvas" height="500" width="810"></canvas>
+    		<canvas id="canvas" height="500" width="750"></canvas>
    			 
 		</div>
 		<div class=pgbodyright>
