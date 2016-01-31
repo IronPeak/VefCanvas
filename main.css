@@ -80,8 +80,10 @@
   width: 33%;
 }
 
-
-
+#prevbutton {
+  background: url("images/leftarrow.jpg") no-repeat 0 0;
+  
+}
 
 
 
