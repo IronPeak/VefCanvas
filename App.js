@@ -561,51 +561,51 @@ $(function() {
 	function WireEvents() {
 		$('#tools').change(function(e) {
 			if($(this).val() == "Circle") {
+				$("#toolselectimage").attr("src", "images/circle.jpg");
 				app.shapeFactory = function() {
 					app.shapeID += 1;
-					$("#toolselectimage").attr("src", "images/circle.jpg");
 					return new Circle(app.shapeID);
 				};
 			}
 			else if($(this).val() == "Ellipse") {
+				$("#toolselectimage").attr("src", "images/ellipse.jpg");
 				app.shapeFactory = function() {
 					app.shapeID += 1;
-					$("#toolselectimage").attr("src", "images/ellipse.jpg");
 					return new Ellipse(app.shapeID);
 				};
 			}
 			else if($(this).val() == "Eraser") {
+				$("#toolselectimage").attr("src", "images/eraser.jpg");
 				app.shapeFactory = function() {
 					app.shapeID += 1;
-					$("#toolselectimage").attr("src", "images/eraser.jpg");
 					return new Eraser(app.shapeID);
 				};
 			}
 			else if($(this).val() == "Line") {
+				$("#toolselectimage").attr("src", "images/line.jpg");
 				app.shapeFactory = function() {
 					app.shapeID += 1;
-					$("#toolselectimage").attr("src", "images/line.jpg");
 					return new Line(app.shapeID);
 				};
 			}
 			else if($(this).val() == "Pen") {
+				$("#toolselectimage").attr("src", "images/pen.jpg");
 				app.shapeFactory = function() {
 					app.shapeID += 1;
-					$("#toolselectimage").attr("src", "images/pen.jpg");
 					return new Pen(app.shapeID);
 				};
 			}
 			else if($(this).val() == "Square") {
+				$("#toolselectimage").attr("src", "images/square.jpg");
 				app.shapeFactory = function() {
 					app.shapeID += 1;
-					$("#toolselectimage").attr("src", "images/square.jpg");
 					return new Square(app.shapeID);
 				};
 			}
 			else if($(this).val() == "Text") {
+				$("#toolselectimage").attr("src", "images/text.jpg");
 				app.shapeFactory = function() {
 					app.shapeID += 1;
-					$("#toolselectimage").attr("src", "images/text.jpg");
 					return new Text(app.shapeID);
 				};
 			}
