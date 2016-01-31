@@ -228,17 +228,21 @@ function App(canvasSelector) {
 	}
 
     self.nextb = function() {
+		console.log("NextB");
         self.newPage[index] = {
             shapes: self.shapes,
             edits: self.edits
         };
         index++;
         if (self.newPage[index] === undefined) {
-            self.newBoard();
-			return;
+            self.newPage[index] = {
+				shapes: [],
+				edits: []
+			};
         }
         self.shapes = self.newPage[index].shapes;
         self.edits = self.newPage[index].edits;
+		self.setPageNumber(index + 1);
         self.redraw();
     }
 	
@@ -254,6 +258,7 @@ function App(canvasSelector) {
         };
 		self.shapes = self.newPage[index].shapes;
         self.edits = self.newPage[index].edits;
+		self.setPageNumber(index + 1);
         self.redraw();
 	}
 
@@ -269,6 +274,7 @@ function App(canvasSelector) {
             index--;
             self.shapes = self.newPage[index].shapes;
             self.edits = self.newPage[index].edits;
+			self.setPageNumber(index + 1);
             self.redraw();
         }
     }
@@ -523,6 +529,9 @@ function App(canvasSelector) {
         self.fontSize = fontSize;
     }
 
+	self.setPageNumber = function(number) {
+		document.getElementById("pagenumber").innerHTML = number;
+	}
 
     self.init = function() {
         // Initialize App	
@@ -547,6 +556,8 @@ function App(canvasSelector) {
         self.fontSize = "16";
         self.font = "Arial";
         self.text = " ";
+		
+		self.setPageNumber(1);
     }   
 	
 	self.getprojectlist();
