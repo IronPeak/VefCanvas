@@ -12,12 +12,12 @@ gulp.task('sass', function() {
 });
 
 gulp.task('browser-sync', function() {
-    browserSync.init(["css/*css", "js/*.js", "*.html", "*js"], {
+    browserSync.init(["*.css", "js/*.js", "*.html", "*js"], {
         server: {
             baseDir: "./"
         }
     });
 });
 gulp.task('watch', ['sass', 'browser-sync'], function() {
-    gulp.watch(["scss/*.scss", "scss/base/*.scss", "scss/selections/*scss", "scss/style*.scss", "*.html", "*.js"], ['sass']);
+    gulp.watch(["scss/*.scss", "scss/base/*.scss", "scss/selections/*scss", "scss/style*.scss", "*.html", "*.js", "*.css"], ['sass']);
 });

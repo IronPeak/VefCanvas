@@ -1,0 +1,27 @@
+
+.canv {
+	
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 800px;
+   
+}
+
+.nextbutton {
+ float: right;
+ height: 200px;
+  width: 300px;
+
+
+}
+
+.prevbutton {
+  float: left;
+  height: -500px;
+    width: 300px;
+  
+
+}

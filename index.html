@@ -5,6 +5,7 @@
             #toolbar {background-color:silver;}
             #canvas {border:1px solid blue;display:block;}
         </style>
+         <link rel="stylesheet" type="text/css" href="main.css">
 		<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script type="text/javascript" src="Base.js"></script>
         <script type="text/javascript" src="Point.js"></script>
@@ -21,22 +22,17 @@
     </head>
     <body>
         <div id="toolbar">
-            <input type="radio" name="tool" id="squarebutton" value="square">
-            </input><label for="squarebutton">Square</label>
-            <input type="radio" name="tool" id="linebutton" value="line"> </input>
-            <label for="linebutton">Line</label>
-            <input type="radio" name="tool" id="circlebutton" value="circle"> </input>
-            <label for="circlebutton">Circle</label>
-            <input type="radio" name="tool" id="ellipsebutton" value="ellipse"> </input>
-            <label for="ellipsebutton">Ellipse</label>
-            <input type="radio" name="tool" id="penbutton" value="pen"> </input>
-            <label for="penbutton">Pen</label>
-            <input type="radio" name="tool" id="textbutton" value="text"> </input>
-            <label for="textbutton">Text</label>
-            <input type="radio" name="tool" id="selectbutton" value="select"> </input>
-            <label for="selectbutton">Select</label>
-            <input type="radio" name="tool" id="eraserbutton" value="select"> </input>
-            <label for="eraserbutton">Eraser</label>
+        <select id ="tools" name="tool">
+        	<option value ="squarebutton">Square</option>
+        	<option value ="linebutton">Line</option>
+        	<option value ="circlebutton">Circle</option>
+        	<option value ="ellipsebutton">Ellipse</option>
+        	<option value ="penbutton">Pen</option>
+        	<option value ="textbutton">Text</option>
+        	<option value ="selectbutton">Select</option>
+        	<option value ="eraserbutton">Eraser</option>
+        </select>
+           
             <input type="color" name="color" id="brushcolor" value="#000000"></input>
             <input type="color" name="color" id="fillcolor" value="#000000"></input>
             <input type="checkbox" name="tool" id="fillshapes" value="fill"> </input>
@@ -67,10 +63,16 @@
         <input type="button" name="undobutton" id="undobutton" value="undo"></input>
         <input type="button" name="redobutton" id="redobutton" value="redo"></input>
         </div>
-		<div>
-        <canvas id="canvas" height="500" width="500"></canvas>
-        <input type="button" name="prevbutton" id="prevbutton" value="prev"></input>
-        <input type="button" name="nextbutton" id="nextbutton" value="next"></input>
+		<div class ="canv">
+        <canvas id="canvas" height="500" width="810"></canvas>
+        </div>
+
+	    <div class ="prevbutton">
+	        <input type="button" name="prevbutton" id="prevbutton" value="prev"></input>
+	    </div>
+    	<div class ="nextbutton">
+    	    <input type="button" name="nextbutton" id="nextbutton" value="next"></input>
+		</div>        
         <input type="button" name="savebutton" id="savebutton" value="save"></input>
 		<input type="text" id="projectname" placeholder="Project Name">
         <input type="button" name="loadbutton" id="loadbutton" value="load"></input>
