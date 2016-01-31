@@ -96,32 +96,14 @@
   padding: 0px;
 }
 
-#prevbutton {
-background: transparent url('/images/leftarrow.jpg') no-repeat 0 0;
-height: 125px;
-width: 123px;
-border: 0;
 
-
-
-}
-#nextbutton {
-background: transparent url('/images/rightarrow.jpg') no-repeat 0 0;
-height: 125px;
-width: 123px;
-border: 0;
-
-}
 
 body {
-<<<<<<< HEAD
 
  background-color: rgb(255,255,255);
 
-=======
-  background-image: url("/images/bg.jpg");
->>>>>>> bafc776bd84ccf94d3414f36f1409b9f48470aa4
 }
+
 
 
 
