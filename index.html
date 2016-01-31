@@ -1,10 +1,7 @@
 <html>
     <head>
         <title>JS-Draw</title>
-        <style>
-            #toolbar {background-color:silver;}
-            #canvas {border:1px solid blue;display:block;}
-        </style>
+        
          <link rel="stylesheet" type="text/css" href="main.css">
 		<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script type="text/javascript" src="Base.js"></script>
@@ -22,6 +19,7 @@
     </head>
     <body>
         <div id="toolbar">
+        <label for="toolbar">Tools</label>
         <select id ="tools" name="tool">
         	<option value ="squarebutton">Square</option>
         	<option value ="linebutton">Line</option>
@@ -69,6 +67,7 @@
 
 	    <div class ="prevbutton">
 	        <input type="button" name="prevbutton" id="prevbutton" value="prev"></input>
+	        <p id ="pagenumber">Page number: </p>
 	    </div>
     	<div class ="nextbutton">
     	    <input type="button" name="nextbutton" id="nextbutton" value="next"></input>
