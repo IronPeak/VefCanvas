@@ -81,9 +81,33 @@
 .brushs {
   width: 33%;
   float:15%;
+}
+.pgfooter {
+  border:1px
+    solid blue;
+}
+
+.pgfooterleft {
+  margin: 0px;
+  float: left;
+  width: 33%;
+  text-align: left;
+}
+
+.pgfootermid {
+  margin: 0px;
+  float: left;
+  width: 33%;
+  text-align: center;
 
 }
 
+.pgfooterright {
+  margin: 0px;
+  float: left;
+  width: 33%;
+  text-align: right;
+}
 
 
 
