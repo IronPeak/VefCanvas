@@ -12,29 +12,3 @@
     display:block;
 
 }
-
-.nextbutton {
-position: absolute;
-left: 900px;
- 
-
-}
-
-.prevbutton {
-  position: absolute;
-    left: 500px;
-     
-
-   
-
-}
-#toolbar {
-  background-color:silver;
-}
-
-#pagenumber {
-  position: absolute;
-    left: 170px;
-    bottom: -20px;
-    width: 100px;
-}
