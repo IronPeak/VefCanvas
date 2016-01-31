@@ -3,6 +3,13 @@ var Text = Shape.extend({
     constructor: function(ID) {
         this.base(ID, "Text");        
     },
+	
+	reconstruct: function(obj) {
+		this.base(obj);
+		this.text = obj.text;
+		this.font = obj.font;
+		this.fontSize = obj.fontSize;
+	},
 
     draw: function(canvas) {
         this.prepareDraw(canvas);
@@ -10,8 +17,16 @@ var Text = Shape.extend({
         this.base(canvas);
     },
 	
-	prepareDraw(canvas) {
-		canvas.font = this.fontSize + " " + this.font;
+	prepareDraw: function(canvas) {
+		canvas.font = this.fontSize + "pt " + this.font;
 		canvas.fillStyle = this.brushColor;
+	},
+	
+	contains: function(point) {
+		var minX = this.pos.x;
+		var maxX = this.pos.x + this.text.length * parseInt(this.fontSize);
+		var minY = this.pos.y - parseInt(this.fontSize);
+		var maxY = this.pos.y;
+		return minX < point.x && point.x < maxX && minY < point.y && point.y < maxY;
 	},
 });

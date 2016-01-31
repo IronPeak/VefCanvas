@@ -82,7 +82,6 @@ function App(canvasSelector) {
             shapeID: shape.ID,
             active: true
         });
-		console.log(JSON.stringify(shape));
         shape.added(self.canvasContext);
 		
 		self.redraw();
@@ -133,7 +132,7 @@ function App(canvasSelector) {
 
     self.mousedown = function(e) {
 		//Check is text tool is selected
-        if(document.getElementById('textbutton').checked) {
+        if($('#tools').val() === "Text") {
             self.writingStart(e);
         }
         else if (self.shapeFactory != null) {
@@ -543,14 +542,11 @@ function App(canvasSelector) {
         self.brushColor = $('input[id=brushcolor]').val();
         self.fillColor = $('input[id=fillcolor]').val();
         self.fill = false;
-        self.brush = $('input[id=brushsize]').val();
+        self.brush = $('#brushsize').val();
         self.index = index = 0;
-        self.inputBox = null;
-        self.fontSize = "16pt";
+        self.fontSize = "16";
         self.font = "Arial";
         self.text = " ";
-
-        
     }   
 	
 	self.getprojectlist();
@@ -561,51 +557,54 @@ var app = null;
 $(function() {
     WireEvents();
     app = new App('#canvas');
-	
+	$('#tools').trigger("change");
 	function WireEvents() {
-		$('#squarebutton').click(function() {
-			app.shapeFactory = function() {
-				app.shapeID += 1;
-				return new Square(app.shapeID);
-			};
-		});
-		$('#linebutton').click(function() {
-			app.shapeFactory = function() {
-				app.shapeID += 1;
-				return new Line(app.shapeID);
-			};
-		});
-		$('#circlebutton').click(function() {
-			app.shapeFactory = function() {
-				app.shapeID += 1;
-				return new Circle(app.shapeID);
-			};
-		});
-		$('#ellipsebutton').click(function() {
-			app.shapeFactory = function() {
-				app.shapeID += 1;
-				return new Ellipse(app.shapeID);
-			};
-		});
-		$('#penbutton').click(function() {
-			app.shapeFactory = function() {
-				app.shapeID += 1;
-				return new Pen(app.shapeID);
-			};
-		});
-        $('#textbutton').click(function() {
-            app.shapeFactory = function() {
-                app.shapeID += 1;
-				return new Text(app.shapeID);
-            };
-        });
-        $('#eraserbutton').click(function() {
-            app.shapeFactory = function() {
-                return new Eraser(app.shapeID);
-            };
-        });
-		$('#selectbutton').click(function() {
-			app.shapeFactory = null;
+		$('#tools').change(function(e) {
+			if($(this).val() == "Circle") {
+				app.shapeFactory = function() {
+					app.shapeID += 1;
+					return new Circle(app.shapeID);
+				};
+			}
+			else if($(this).val() == "Ellipse") {
+				app.shapeFactory = function() {
+					app.shapeID += 1;
+					return new Ellipse(app.shapeID);
+				};
+			}
+			else if($(this).val() == "Eraser") {
+				app.shapeFactory = function() {
+					app.shapeID += 1;
+					return new Eraser(app.shapeID);
+				};
+			}
+			else if($(this).val() == "Line") {
+				app.shapeFactory = function() {
+					app.shapeID += 1;
+					return new Line(app.shapeID);
+				};
+			}
+			else if($(this).val() == "Pen") {
+				app.shapeFactory = function() {
+					app.shapeID += 1;
+					return new Pen(app.shapeID);
+				};
+			}
+			else if($(this).val() == "Square") {
+				app.shapeFactory = function() {
+					app.shapeID += 1;
+					return new Square(app.shapeID);
+				};
+			}
+			else if($(this).val() == "Text") {
+				app.shapeFactory = function() {
+					app.shapeID += 1;
+					return new Text(app.shapeID);
+				};
+			}
+			else if($(this).val() == "Select") {
+				app.shapeFactory = null;
+			}
 		});
 		$('#clearbutton').click(function() {
 			app.clear()
@@ -655,7 +654,7 @@ $(function() {
 			app.setBrush($(this).val())
 		});
         $('#fontSize').change(function() {
-            app.setFontSize($(this).val() + "pt");
+            app.setFontSize($(this).val());
         });
         $('#fontfamily').change(function() {
             app.setFontFamily($(this).val());
