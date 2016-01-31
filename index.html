@@ -44,6 +44,7 @@
 
             <div class=pgheadright>
                 <div class=brushsize>
+                	<span class="glyphicon glyphicon-pencil"></span>
                     <label for="brushsize">Size</label>
                     <input type="range" name="brush" id="brushsize" value="5" min="1" max="10"> </input>
                 </div>
@@ -59,7 +60,8 @@
         <div class=pgbody>
             <div class=pgbodyleft>
                 <div class=pgbodylefttop>
-                    <input type="text" id="projectname" placeholder="Project Name">
+                    <input type="text" id="projectname" placeholder="Project Name"> 
+                    <span class="glyphicon glyphicon-save"></span>
                     <input type="button" class="btn btn-success btn-block" id="savebutton" value="save"></input>
                     <select id="projectlist">
                     </select>
@@ -80,6 +82,7 @@
             <div class=pgbodyright>
                 <div class=pgbodyrighttop>
                     <input type="text" id="templatename" placeholder="Template Name">
+                    <span class="glyphicon glyphicon-save"></span>
                     <input type="button" class="btn btn-success btn-block" id="savetemplatebutton" value="save"></input>
                     <select id="templatelist">
                     </select>
@@ -90,7 +93,7 @@
                 </div>
 
                 <div class=pgbodyrightbottom>
-                    <label for="fontSize">Font Size</label>
+                    <span class="glyphicon glyphicon-text-size"></span>
                     <select id="fontSize" name="fontS">
                         <option value="8">8</option>
                         <option value="16" selected="selected">16</option>
@@ -98,7 +101,7 @@
                         <option value="32">32</option>
                     </select>
                     <br/>
-                    <label for="fontfamily">Text Font:</label>
+                    <span class="glyphicon glyphicon-font"></span>
                     <select id="fontfamily" name="font">
                         <option value="Arial" selected="selected">Arial</option>
                         <option value="Times New Roman">Times New Roman</option>
