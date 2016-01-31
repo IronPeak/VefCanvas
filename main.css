@@ -1,10 +1,8 @@
 #canvas {
-  height: 500;
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
     margin-right: auto;
-    width: 810px;
     border:1px
     solid blue;
     display:block;
@@ -13,44 +11,44 @@
 
 .pgheadleft {
   margin: 0px;
-  float: left;
-  width: 33%;
+  display: inline-block;
+  width: 39%;
   text-align: center;
 }
 
 .pgheadmid {
   margin: 0px;
-  float: left;
-  width: 33%;
+  display: inline-block;
+  width: 20%;
   text-align: center;
 }
 
 .pgheadright {
   margin: 0px;
-  float: left;
-  width: 33%;
+  display: inline-block;
+  width: 39%;
   text-align: center;
 
 }
 
 .pgbodyleft {
   margin: 0px;
-  float: left;
-  width: 15%;
+  display: inline-block;
+  width: 14%;
   text-align: center;
 }
 
 .pgbodycanvas {
   margin: 0px;
-  float: left;
+  display: inline-block;
   width: 70%;
   text-align: center;
 }
 
 .pgbodyright {
   margin: 0px;
-  float: left;
-  width: 15%;
+  display: inline-block;
+  width: 14%;
   text-align: center;
 }
 
@@ -80,8 +78,6 @@
 
 .brushs {
   width: 33%;
-  float:15%;
-
 }
 
 
