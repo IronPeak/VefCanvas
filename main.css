@@ -1,4 +1,4 @@
-.canv {
+#canvas {
   height: 500;
     padding-left: 0;
     padding-right: 0;
@@ -10,24 +10,27 @@
     display:block;
 }
 
-.nextbutton {
-position: absolute;
-left: 900px;
+
+.pgheadleft {
+  margin: 0px;
+  float: left;
+  width: 33%;
+  text-align: center;
 }
 
-.prevbutton {
-  position: absolute;
-  left: 500px;
-}
-#toolbar {
-  background-color:silver;
+.pgheadmid {
+  margin: 0px;
+  float: left;
+  width: 33%;
+  text-align: center;
 }
 
-#pagenumber {
-  position: absolute;
-    left: 170px;
-    bottom: -20px;
-    width: 100px;
+.pgheadright {
+  margin: 0px;
+  float: left;
+  width: 33%;
+  text-align: center;
+
 }
 
 .pgbodyleft {
@@ -50,3 +53,44 @@ left: 900px;
   width: 15%;
   text-align: center;
 }
+
+.pgbodylefttop {
+  height: 33%;
+
+}
+.pgbodyleftmid {
+  height: 33%;
+}
+
+.pgbodyleftbottom {
+  height: 33%;
+}
+
+.pgbodyrighttop {
+  height: 33%;
+}
+
+.pgbodyrightmid {
+  height: 33%;
+}
+
+.pgbodyrightbottom {
+  height: 33%;
+}
+
+.brushs {
+  width: 33%;
+  float:15%;
+
+}
+
+
+
+
+
+
+
+
+
+
+

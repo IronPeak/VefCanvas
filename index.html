@@ -21,8 +21,9 @@
 
 <div class="container">
 	<div class=pghead>
-		<label for="toolbar">Tools</label>
-		<select id ="tools" name="tool">
+		<div class=pgheadleft>
+			<label for="toolbar">Tools</label>
+			<select id ="tools" name="tool">
 			<option value="Square">Square</option>
 			<option value="Line">Line</option>
 			<option value="Circle">Circle</option>
@@ -31,15 +32,75 @@
 			<option value="Text">Text</option>
 			<option value="Select">Select</option>
 			<option value="Eraser">Eraser</option>
-		</select>
+			</select>
+			<input type="checkbox" name="tool" id="fillshapes" value="fill"> </input>
+			<label for="fillshapes">Fill</label>
+		</div>
+		<div class=pgheadmid>
+			<img id ="toolselectimage" src="." /> 123
+		</div>
+
+		<div class=pgheadright>
+		<label for="brushcolor">Brush Color</label>
+			<input type="color" name="color" id="brushcolor" value="#000000"></input>
+		<label for="fillcolor">Fill Color</label>
+			<input type="color" name="color" id="fillcolor" value="#000000"></input>
+		<div class=brushs>
+			<input type="range"  name="brush"  id="brushsize"  value="5"  min="0" max="20"> </input>
+			<label for="brushsize">Brush Size</label>
+		</div>
+			
+		</div>
+	</div>
 		
-		<input type="color" name="color" id="brushcolor" value="#000000"></input>
-		<input type="color" name="color" id="fillcolor" value="#000000"></input>
-		<input type="checkbox" name="tool" id="fillshapes" value="fill"> </input>
-		<label for="fillshapes">Fill</label>
-		<input type="range"  name="brush"  id="brushsize"  value="5"  min="0" max="20"> </input>
-		<label for="brushsize">Brush Size</label>
-		<label for="fontSize">Font Size</label>
+		
+		
+	
+	<div class=pgbody>
+		<div class=pgbodyleft>
+			<div class=pgbodylefttop>
+				
+   			</div>
+   			<div class=pgbodyleftmid>
+   			 <input type="button" name="prevbutton" id="prevbutton" value="prev"></input>
+   			</div>
+   			<div class=pgbodyleftbottom>
+   				<input type="button" name="clearbutton" id="clearbutton" value="clear"></input>
+   				<input type="button" name="undobutton" id="undobutton" value="undo"></input>
+   				<input type="button" name="redobutton" id="redobutton" value="redo"></input>
+   			</div>
+
+
+	</div>
+
+
+		<div class=pgbodycanvas>
+		
+    		<canvas id="canvas" height="500" width="810"></canvas>
+   			 
+		</div>
+		<div class=pgbodyright>
+			<div class=pgbodyrighttop>
+				<input type="button" name="savebutton" id="savebutton" value="save"></input>
+				<input type="text" id="projectname" placeholder="Project Name">
+    			<input type="button" name="loadbutton" id="loadbutton" value="load"></input	>
+				<select id="projectlist">
+				</select>
+				
+				
+				<input type="button" name="savetemplatebutton" id="savetemplatebutton" value="	save"></input>
+				<input type="text" id="templatename" placeholder="Template Name">
+   			 	<input type="button" name="loadtemplatebutton" id="loadtemplatebutton" value="loadtemplate"></input>
+				<select id="templatelist">
+				</select>
+				
+			</div>
+			<div class=pgbodyrightmid>
+				<input type="button" name="nextbutton" id="nextbutton" value="next"></input>
+			</div>
+
+			<div class=pgbodyrightbottom>
+				<label for="fontSize">Font Size</label>
 			<select id="fontSize" name="fontS">
 				<option value="8" >8</option>
 				<option value="16" selected="selected">16</option>
@@ -53,16 +114,8 @@
 				<option value="serif">serif</option>
 				<option value="Courier New">Courier New</option>
 			</select>
-	</div>
-	<div class=pgbody>
-		<div class=pgbodyleft>
-			BODY LEFT
-		</div>
-		<div class=pgbodycanvas>
-			BODY Canvas
-		</div>
-		<div class=pgbodyright>
-			BODY RIGHT
+			</div>
+
 		</div>
 	</div>
 	<div class=pgfoother>
@@ -70,7 +123,7 @@
 			FOOTER LEFT
 		</div>
 		<div class=pgfooterpage>
-			FOOTER PAGE
+			 <p id ="pagenumber">Page number: </p>
 		</div>
 		<div class=pgfooterright>
 			FOOTER RIGHT
@@ -80,59 +133,7 @@
 
 
 
-<div class="container">
-    <div id="toolbar">
-		
-		
-		<div>
-			<label for="fontSize">Font Size</label>
-			<select id="fontSize" name="fontS">
-				<option value="8" >8</option>
-				<option value="16" selected="selected">16</option>
-				<option value="24">24</option>
-				<option value="32">32</option>
-			</select>
-			<label for="fontfamily">Font</label>
-			<select id="fontfamily" name="font">
-				<option value="Arial" selected="selected">Arial</option>
-				<option value="Times New Roman">Times New Roman</option>
-				<option value="serif">serif</option>
-				<option value="Courier New">Courier New</option>
-			</select>
-		</div>
-    </div>
-	
-	
-	<div>
-    <input type="button" name="clearbutton" id="clearbutton" value="clear"></input>
-    <input type="button" name="undobutton" id="undobutton" value="undo"></input>
-    <input type="button" name="redobutton" id="redobutton" value="redo"></input>
-    </div>
-	<div class ="canv">
-    <canvas id="canvas" height="500" width="810"></canvas>
-    </div>
-
-    <div class ="prevbutton">
-        <input type="button" name="prevbutton" id="prevbutton" value="prev"></input>
-        <p id ="pagenumber">Page number: </p>
-    </div>
-	<div class ="nextbutton">
-	    <input type="button" name="nextbutton" id="nextbutton" value="next"></input>
-	</div>        
-    <input type="button" name="savebutton" id="savebutton" value="save"></input>
-	<input type="text" id="projectname" placeholder="Project Name">
-    <input type="button" name="loadbutton" id="loadbutton" value="load"></input>
-	<select id="projectlist">
-	</select>
-	</div>
-	<div>
-	<input type="button" name="savetemplatebutton" id="savetemplatebutton" value="save"></input>
-	<input type="text" id="templatename" placeholder="Template Name">
-    <input type="button" name="loadtemplatebutton" id="loadtemplatebutton" value="loadtemplate"></input>
-	<select id="templatelist">
-	</select>
-	</div>
-    <div class="text-spawner"></div>
+    
 </div>
 </body>
 </html>
