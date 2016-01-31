@@ -28,8 +28,7 @@ Base.extend = function(_instance, _static) { // subclass
                 this._constructing = true;
                 constructor.apply(this, arguments);
                 delete this._constructing;
-            }
-            else if (arguments[0] != null) { // casting
+            } else if (arguments[0] != null) { // casting
                 return (arguments[0].extend || extend).call(arguments[0], proto);
             }
         }
@@ -77,8 +76,7 @@ Base.prototype = {
                 value.toString = Base.toString;
             }
             this[source] = value;
-        }
-        else if (source) { // extending with an object literal
+        } else if (source) { // extending with an object literal
             var extend = Base.prototype.extend;
             // if this object has a customised extend method then use it
             if (!Base._prototyping && typeof this != "function") {
@@ -128,8 +126,7 @@ Base = Base.extend({
             if (typeof arguments[i] == "function") {
                 // if it's a function, call it
                 arguments[i](this.prototype);
-            }
-            else {
+            } else {
                 // add the interface using the extend method
                 this.prototype.extend(arguments[i]);
             }

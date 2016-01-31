@@ -30,13 +30,13 @@ var Line = Shape.extend({
     },
 
     startMove: function(point) {
-		this.posOffset = point.subtract(this.pos);
-		this.sizeOffset = point.subtract(this.size);
-	},
-	
+        this.posOffset = point.subtract(this.pos);
+        this.sizeOffset = point.subtract(this.size);
+    },
+
     moveTo: function(point) {
         this.pos = point.subtract(this.posOffset);
-		this.size = point.subtract(this.sizeOffset);
+        this.size = point.subtract(this.sizeOffset);
     },
 
     setDiameters: function() {
@@ -47,7 +47,7 @@ var Line = Shape.extend({
     },
 
     contains: function(point) {
-		this.setDiameters();
+        this.setDiameters();
         return this.minX <= point.x && point.x <= this.maxX && this.minY <= point.y && point.y <= this.maxY;
     },
 

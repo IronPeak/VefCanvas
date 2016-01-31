@@ -9,18 +9,18 @@ var Pen = Shape.extend({
         this.minY = 0;
         this.maxY = 0;
     },
-	
-	reconstruct: function(obj) {
-		this.base(obj);
-		this.minX = obj.minX;
+
+    reconstruct: function(obj) {
+        this.base(obj);
+        this.minX = obj.minX;
         this.maxX = obj.maxX;
         this.minY = obj.minY;
         this.maxY = obj.maxY;
-		this.drawPoints = [];
-		for (var i = 1; i < obj.drawPoints.length; i++) {
+        this.drawPoints = [];
+        for (var i = 1; i < obj.drawPoints.length; i++) {
             this.drawPoints.push(new Point(obj.drawPoints[i].x, obj.drawPoints[i].y));
         }
-	},
+    },
 
     draw: function(canvas) {
         this.prepareDraw(canvas);

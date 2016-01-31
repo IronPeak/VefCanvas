@@ -1,7 +1,7 @@
 var Shape = Base.extend({
 
     constructor: function(ID, name) {
-		this.ID = ID;
+        this.ID = ID;
         this.name = name;
         this.pos = new Point(0, 0);
         this.size = new Point(0, 0);
@@ -10,18 +10,18 @@ var Shape = Base.extend({
         this.fill = false;
         this.active = true;
     },
-	
-	reconstruct: function(obj) {
-		this.active = obj.active;
-		this.brushColor = obj.brushColor;
-		this.fill = obj.fill;
-		this.fillColor = obj.fillColor;
-		this.brush = obj.brush;
+
+    reconstruct: function(obj) {
+        this.active = obj.active;
+        this.brushColor = obj.brushColor;
+        this.fill = obj.fill;
+        this.fillColor = obj.fillColor;
+        this.brush = obj.brush;
         this.fontSize = obj.fontSize;
         this.font = obj.font;
-		this.pos = new Point(obj.pos.x, obj.pos.y);
-		this.size = new Point(obj.size.x, obj.size.y);
-	},
+        this.pos = new Point(obj.pos.x, obj.pos.y);
+        this.size = new Point(obj.size.x, obj.size.y);
+    },
 
     draw: function(canvas) {
         if (this.selected === true) {
@@ -49,10 +49,10 @@ var Shape = Base.extend({
         return false;
     },
 
-	startMove: function(point) {
-		this.posOffset = point.subtract(this.pos);
-	},
-	
+    startMove: function(point) {
+        this.posOffset = point.subtract(this.pos);
+    },
+
     moveTo: function(point) {
         this.pos = point.subtract(this.posOffset);
     },

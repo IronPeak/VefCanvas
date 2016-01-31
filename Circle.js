@@ -4,11 +4,11 @@ var Circle = Shape.extend({
         this.base(ID, "Circle");
         this.radius = 0;
     },
-	
-	reconstruct: function(obj) {
-		this.base(obj);
-		this.radius = obj.radius;
-	},
+
+    reconstruct: function(obj) {
+        this.base(obj);
+        this.radius = obj.radius;
+    },
 
     draw: function(canvas) {
         this.prepareDraw(canvas);
