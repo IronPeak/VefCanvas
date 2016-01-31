@@ -3,7 +3,9 @@ function App(canvasSelector) {
     self.getEventPoint = function(e) {
         return new Point(e.pageX - self.canvasOffset.x, e.pageY - self.canvasOffset.y);
     }
-
+    global = {
+        textype : ""
+    };
     self.drawingStart = function(e) {
         var startPos = self.getEventPoint(e);
         var shape = self.shapeFactory();
@@ -12,6 +14,12 @@ function App(canvasSelector) {
         shape.fillColor = self.fillColor;
         shape.fill = self.fill;
         shape.brush = self.brush;
+        shape.fontSize = self.fontSize;
+        shape.font = self.font;
+        shape.text = self.text;
+        
+
+
 
         shape.startDrawing(startPos, self.canvasContext);
         startPos.log('drawing start');
@@ -103,7 +111,22 @@ function App(canvasSelector) {
     }
 
     self.mousedown = function(e) {
-        if (self.shapeFactory != null) {
+
+        if(document.getElementById('textbutton').checked) {
+           
+           if(self.inputBox) {
+            self.inputBox.remove();
+           }
+           self.inputBox = $("<input/>");
+           self.inputBox.css("position", "absolute");
+           self.inputBox.css("top", event.pageY);
+           self.inputBox.css("left", event.pageX);
+
+           $(".text-spawner").append(self.inputBox);
+            self.inputBox.focus();
+        }
+
+        else if (self.shapeFactory != null) {
             self.drawingStart(e);
         }
         else {
@@ -119,6 +142,23 @@ function App(canvasSelector) {
 
         self.redraw();
     }
+
+    $(document).keypress(function(event) {
+        if(event.which === 13) {
+            if(self.inputBox) {
+                global.textype = self.inputBox.val();
+
+                self.inputBox.remove();
+
+                return new Text(app.shapeID).draw();
+            
+            }
+        }
+
+
+            
+            
+    });
 
     self.redraw = function() {
         self.canvasContext.clearRect(0, 0, self.canvasContext.canvas.width, self.canvasContext.canvas.height);
@@ -475,10 +515,20 @@ function App(canvasSelector) {
         self.fill = checked;
 
     }
-
     self.setBrush = function(brush) {
+
         self.brush = brush;
     }
+
+    self.setFontFamily = function(font) {
+        self.font = font;
+
+    }
+
+    self.setFontSize = function(fontSize) {
+        self.fontSize = fontSize;
+    }
+
 
     self.init = function() {
         // Initialize App	
@@ -498,9 +548,15 @@ function App(canvasSelector) {
         self.brushColor = $('input[id=brushcolor]').val();
         self.fillColor = $('input[id=fillcolor]').val();
         self.fill = false;
-        self.brush = $('input[id=brushsize]').val();;
+        self.brush = $('input[id=brushsize]').val();
         self.index = index = 0;
-    }
+        self.inputBox = null;
+        self.fontSize = "16pt";
+        self.font = "Arial";
+        self.text = "123";
+
+        
+    }   
 	
 	self.getprojectlist();
 	self.gettemplatelist();
@@ -542,6 +598,14 @@ $(function() {
 				return new Pen(app.shapeID);
 			};
 		});
+        $('#textbutton').click(function() {
+            
+        });
+        $('#eraserbutton').click(function() {
+            app.shapeFactory = function() {
+                return new Eraser(app.shapeID);
+            };
+        });
 		$('#selectbutton').click(function() {
 			app.shapeFactory = null;
 		});
@@ -592,5 +656,11 @@ $(function() {
 		$('#brushsize').change(function() {
 			app.setBrush($(this).val())
 		});
+        $('#fontSize').change(function() {
+            app.setFontSize($(this).val() + "pt");
+        });
+        $('#fontfamily').change(function() {
+            app.setFontFamily($(this).val());
+        });
 	}
 });

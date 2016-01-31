@@ -1,8 +1,8 @@
-var Pen = Shape.extend({
+var Eraser = Shape.extend({
 
     constructor: function(ID) {
-        this.base(ID, "Pen");
-        console.log(canvas.strokeStyle);
+        this.base(ID, "Eraser");
+        canvas.lineWidth = this.brush;
         this.drawPoints = [];
         this.minX = 0;
         this.maxX = 0;
@@ -24,6 +24,7 @@ var Pen = Shape.extend({
 
     draw: function(canvas) {
         this.prepareDraw(canvas);
+        canvas.strokeStyle = 'rgb(255,255,255)';
         canvas.beginPath();
         canvas.moveTo(this.drawPoints[0], this.drawPoints[0]);
         for (var i = 1; i < this.drawPoints.length; i++) {
@@ -57,8 +58,6 @@ var Pen = Shape.extend({
         this.maxY = Math.max(point.y, this.maxY);
     },
 
-    contains: function(point) {
-        return this.minX <= point.subtract(this.pos).x && point.subtract(this.pos).x <= this.maxX && this.minY <= point.subtract(this.pos).y && point.subtract(this.pos).y <= this.maxY;
-    },
+   
 
 });

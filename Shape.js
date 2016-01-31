@@ -9,6 +9,9 @@ var Shape = Base.extend({
         this.fillColor = null;
         this.fill = false;
         this.active = true;
+        this.fontSize = null;
+        this.font = null;
+        this.text = global.textype;
     },
 	
 	reconstruct: function(obj) {
@@ -17,6 +20,8 @@ var Shape = Base.extend({
 		this.fill = obj.fill;
 		this.fillColor = obj.fillColor;
 		this.brush = obj.brush;
+        this.fontSize = obj.fontSize;
+        this.font = obj.font;
 		this.pos = new Point(obj.pos.x, obj.pos.y);
 		this.size = new Point(obj.size.x, obj.size.y);
 	},
@@ -59,5 +64,6 @@ var Shape = Base.extend({
         canvas.lineWidth = this.brush;
         canvas.strokeStyle = this.brushColor;
         canvas.fillStyle = this.fillColor;
+        canvas.font = this.fontSize + " " + this.font;
     }
 });
