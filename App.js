@@ -533,9 +533,10 @@ function App(canvasSelector) {
 
     self.setBrushColor = function(color) {
         self.brushColor = color;
+		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
 			if(self.shapes[i].selected === true) {
-				self.shapes[i].brushColor = color;
+				selected.push(self.shape[i]);
 			}
 		}
 		self.redraw();
@@ -543,9 +544,10 @@ function App(canvasSelector) {
 
     self.setFillColor = function(color) {
         self.fillColor = color;
+		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
 			if(self.shapes[i].selected === true) {
-				self.shapes[i].fillColor = color;
+				selected.push(self.shape[i]);
 			}
 		}
 		self.redraw();
@@ -553,9 +555,10 @@ function App(canvasSelector) {
 
     self.setFillOption = function(checked) {
         self.fill = checked;
+		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
 			if(self.shapes[i].selected === true) {
-				self.shapes[i].fill = checked;
+				selected.push(self.shape[i]);
 			}
 		}
 		self.redraw();
@@ -563,9 +566,10 @@ function App(canvasSelector) {
     }
     self.setBrush = function(brush) {
         self.brush = brush;
+		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
 			if(self.shapes[i].selected === true) {
-				self.shapes[i].brush = brush;
+				selected.push(self.shape[i]);
 			}
 		}
 		self.redraw();
@@ -573,16 +577,26 @@ function App(canvasSelector) {
 
     self.setFontFamily = function(font) {
         self.font = font;
+		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
 			if(self.shape[i].name === "Text" && self.shapes[i].selected === true) {
-				self.shapes[i].font = font;
+				selected.push(self.shape[i]);
 			}
+		}
+		var edit = {
+			type: "SetFont",
+			info: [],
+			active: true
+		};
+		for(var i = 0; i < selected.length; i++) {
+			
 		}
 		self.redraw();
     }
 
     self.setFontSize = function(fontSize) {
         self.fontSize = fontSize;
+		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
 			if(self.shape[i].name === "Text" && self.shapes[i].selected === true) {
 				self.shapes[i].fontSize = fontSize;
