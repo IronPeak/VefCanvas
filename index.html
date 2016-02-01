@@ -61,7 +61,7 @@
         <div class=pgbody>
             <div class=pgbodyleft>
                 <div class=pgbodylefttop>
-                    <input type="text" id="projectname" placeholder="Project Name">
+                    <input type="text" id="projectname" placeholder="Project Name" class="form-control">
 
                     <button type="button" class="btn btn-success btn-block" id="savebutton" value="save"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
                     <select id="projectlist" class="form-control">
@@ -72,9 +72,11 @@
                     <button type="button" class="btn btn-primary btn-arrow-left" name="prevbutton" id="prevbutton" value="Prev Page"> <span class="glyphicon glyphicon-chevron-left"></span> Prev Page</button>
                 </div>
                 <div class=pgbodyleftbottom>
-                    <button type="button" class="btn btn-danger btn-block" id="clearbutton" value="clear"><span class="glyphicon glyphicon-remove-sign"></span> Clear</button>
-                    <button type="button" class="btn btn-primary btn-block" id="undobutton" value="undo"><span class="glyphicon glyphicon-minus-sign"></span> Undo</button>
-                    <button type="button" class="btn btn-primary btn-block" id="redobutton" value="redo"><span class="glyphicon glyphicon-plus-sign"></span> Redo</button>
+                	<div  class="btn-group-vertical">
+                   		<button type="button" class="btn btn-danger btn-block" id="clearbutton" value="clear"><span class="glyphicon glyphicon-remove-sign"></span> Clear</button>
+                   	 	<button type="button" class="btn btn-primary btn-block" id="undobutton" value="undo"><span class="glyphicon glyphicon-minus-sign"></span> Undo</button>
+                    	<button type="button" class="btn btn-primary btn-block" id="redobutton" value="redo"><span class="glyphicon glyphicon-plus-sign"></span> Redo</button>
+                    </div>
                 </div>
             </div>
             <div class=pgbodycanvas>
@@ -82,7 +84,7 @@
             </div>
             <div class=pgbodyright>
                 <div class=pgbodyrighttop>
-                    <input type="text" id="templatename" placeholder="Template Name">
+                    <input type="text" id="templatename" placeholder="Template Name" class="form-control">
                     <button type="button" class="btn btn-success btn-block" id="savetemplatebutton" value="save"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
                     <select id="templatelist" class="form-control" class="form-control">
                     </select>
@@ -95,7 +97,7 @@
 
                 <div class=pgbodyrightbottom>
                     <span class="glyphicon glyphicon-text-size"></span>
-                    <input type="range" id="fontSize" name="fontS" value="16" min="8" max ="32"> </input>
+                    <input type="range" id="fontSize" name="fontS" value="16" min="8" max ="32"></input>
                     <br/>
                     <span class="glyphicon glyphicon-font"></span>
                     <select id="fontfamily" name="font" class="form-control">
