@@ -92,3 +92,8 @@
 #tools {
     max-width: 25%;
 }
+
+
+.btn-group-vertical {
+    width: 100%;
+}
