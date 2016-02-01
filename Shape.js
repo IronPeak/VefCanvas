@@ -9,6 +9,7 @@ var Shape = Base.extend({
         this.fillColor = null;
         this.fill = false;
         this.active = true;
+		this.selected = false;
     },
 
     reconstruct: function(obj) {
@@ -21,12 +22,11 @@ var Shape = Base.extend({
         this.font = obj.font;
         this.pos = new Point(obj.pos.x, obj.pos.y);
         this.size = new Point(obj.size.x, obj.size.y);
+		this.selected = false;
     },
 
     draw: function(canvas) {
-        if (this.selected === true) {
-            // show selection
-        }
+
     },
 
     startDrawing: function(point) {
@@ -61,6 +61,10 @@ var Shape = Base.extend({
         canvas.lineWidth = this.brush;
         canvas.strokeStyle = this.brushColor;
         canvas.fillStyle = this.fillColor;
-        canvas.font = this.fontSize + " " + this.font;
+		if(this.selected === false) {
+			canvas.setLineDash([0]);
+		} else {
+			canvas.setLineDash([6]);
+		}
     }
 });

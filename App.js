@@ -87,17 +87,30 @@ function App(canvasSelector) {
         self.redraw();
     }
 
-    self.movingStart = function(e, object) {
+    self.movingStart = function(e, objects) {
         var startMove = self.getEventPoint(e);
-        var startPos = object.pos;
-        var startSize = object.size;
-
-        object.startMove(startMove);
+		
+		var edit = {
+			type: "Moved",
+			info: [],
+			active: true
+		}
+		
+		for(var i = 0; i < objects.length; i++) {
+			edit.info.push({
+				shapeID: objects[i].ID,
+				prevX: objects[i].pos.x,
+				prevY: objects[i].pos.y
+			});
+			objects[i].startMove(startMove);
+		}
 
         var move = function(e) {
             var pos = self.getEventPoint(e);
 
-            object.moveTo(pos);
+			for(var i = 0; i < objects.length; i++) {
+				objects[i].moveTo(pos);
+			}
 
             self.redraw();
         }
@@ -105,17 +118,16 @@ function App(canvasSelector) {
         var moveStop = function(e) {
             var pos = self.getEventPoint(e);
 
-            object.moveTo(pos);
-
-            self.edits.push({
-                type: "Moved",
-                shapeID: object.ID,
-                prevX: startPos.x,
-                prevY: startPos.y,
-                posX: object.pos.x,
-                posY: object.pos.y,
-                active: true
-            });
+            for(var i = 0; i < objects.length; i++) {
+				objects[i].moveTo(pos);
+			}
+			
+			for(var i = 0; i < objects.length; i++) {
+				edit.info[i].posX = objects[i].pos.x;
+				edit.info[i].posY = objects[i].pos.y;
+			}
+			
+            self.edits.push(edit);
             self.canvas.off({
                 mousemove: move,
                 mouseup: moveStop
@@ -129,6 +141,11 @@ function App(canvasSelector) {
             mouseup: moveStop
         });
     }
+	
+	self.selectObject = function(e, object) {
+        object.selected = !object.selected;
+        self.redraw();
+    }
 
     self.mousedown = function(e) {
         //Check is text tool is selected
@@ -136,15 +153,23 @@ function App(canvasSelector) {
             self.writingStart(e);
         } else if (self.shapeFactory != null) {
             self.drawingStart(e);
-        } else {
+        } else if($('#tools').val() === "Select"){
             for (var i = 0; i < self.shapes.length; i++) {
                 if (self.shapes[i].active) {
                     if (self.shapes[i].contains(self.getEventPoint(e))) {
-                        self.movingStart(e, self.shapes[i]);
+                        self.selectObject(e, self.shapes[i]);
                         break;
                     }
                 }
             }
+        } else if($('#tools').val() === "Move"){
+			var Objects = [];
+            for (var i = 0; i < self.shapes.length; i++) {
+                if (self.shapes[i].active && self.shapes[i].selected) {
+					Objects.push(self.shapes[i]);
+                }
+            }
+			self.movingStart(e, Objects);
         }
         self.redraw();
     }
@@ -186,9 +211,12 @@ function App(canvasSelector) {
         }
         if (edit.type == "Moved") {
             edit.active = false;
-            var shape = self.findShape(edit.shapeID);
-            shape.startMove(shape.pos);
-            shape.moveTo(new Point(edit.prevX, edit.prevY));
+			for(var i = 0; i < edit.info.length; i++) {
+				var info = edit.info[i];
+				var shape = self.findShape(info.shapeID);
+				shape.startMove(shape.pos);
+				shape.moveTo(new Point(info.prevX, info.prevY));
+			}
         }
     }
 
@@ -211,9 +239,12 @@ function App(canvasSelector) {
         }
         if (edit.type == "Moved") {
             edit.active = true;
-            var shape = self.findShape(edit.shapeID);
-            shape.startMove(shape.pos);
-            shape.moveTo(new Point(edit.posX, edit.posY));
+			for(var i = 0; i < edit.info.length; i++) {
+				var info = edit.info[i];
+				var shape = self.findShape(info.shapeID);
+				shape.startMove(shape.pos);
+				shape.moveTo(new Point(info.posX, info.posY));
+			}
         }
     }
 
@@ -502,28 +533,62 @@ function App(canvasSelector) {
 
     self.setBrushColor = function(color) {
         self.brushColor = color;
+		for(var i = 0; i < self.shapes.length; i++) {
+			if(self.shapes[i].selected === true) {
+				self.shapes[i].brushColor = color;
+			}
+		}
+		self.redraw();
     }
 
     self.setFillColor = function(color) {
         self.fillColor = color;
+		for(var i = 0; i < self.shapes.length; i++) {
+			if(self.shapes[i].selected === true) {
+				self.shapes[i].fillColor = color;
+			}
+		}
+		self.redraw();
     }
 
     self.setFillOption = function(checked) {
         self.fill = checked;
+		for(var i = 0; i < self.shapes.length; i++) {
+			if(self.shapes[i].selected === true) {
+				self.shapes[i].fill = checked;
+			}
+		}
+		self.redraw();
 
     }
     self.setBrush = function(brush) {
-
         self.brush = brush;
+		for(var i = 0; i < self.shapes.length; i++) {
+			if(self.shapes[i].selected === true) {
+				self.shapes[i].brush = brush;
+			}
+		}
+		self.redraw();
     }
 
     self.setFontFamily = function(font) {
         self.font = font;
-
+		for(var i = 0; i < self.shapes.length; i++) {
+			if(self.shape[i].name === "Text" && self.shapes[i].selected === true) {
+				self.shapes[i].font = font;
+			}
+		}
+		self.redraw();
     }
 
     self.setFontSize = function(fontSize) {
         self.fontSize = fontSize;
+		for(var i = 0; i < self.shapes.length; i++) {
+			if(self.shape[i].name === "Text" && self.shapes[i].selected === true) {
+				self.shapes[i].fontSize = fontSize;
+			}
+		}
+		self.redraw();
     }
 
     self.setPageNumber = function(number) {
