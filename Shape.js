@@ -1,3 +1,5 @@
+var selectionOffset = 5;
+
 var Shape = Base.extend({
 
     constructor: function(ID, name) {
