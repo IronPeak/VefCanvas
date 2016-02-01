@@ -14,6 +14,14 @@ var Text = Shape.extend({
     draw: function(canvas) {
         this.prepareDraw(canvas);
         canvas.fillText(this.text, this.pos.x, this.pos.y);
+		if(this.selected) {
+			var magicNumber = 0.75;
+			var minX = this.pos.x;
+			var maxX = this.text.length * parseInt(this.fontSize) * magicNumber;
+			var minY = this.pos.y - parseInt(this.fontSize);
+			var maxY = parseInt(this.fontSize);
+			canvas.strokeRect(minX, minY, maxX, maxY);
+		}
         this.base(canvas);
     },
 
@@ -24,10 +32,11 @@ var Text = Shape.extend({
     },
 
     contains: function(point) {
-        var minX = this.pos.x;
-        var maxX = this.pos.x + this.text.length * parseInt(this.fontSize);
-        var minY = this.pos.y - parseInt(this.fontSize);
-        var maxY = this.pos.y;
+        var magicNumber = 0.75;
+		var minX = this.pos.x;
+		var maxX = this.pos.x + this.text.length * parseInt(this.fontSize) * magicNumber;
+		var minY = this.pos.y - parseInt(this.fontSize);
+		var maxY = this.pos.y;
         return minX < point.x && point.x < maxX && minY < point.y && point.y < maxY;
     },
 });
