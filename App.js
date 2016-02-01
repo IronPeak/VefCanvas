@@ -452,6 +452,12 @@ function App(canvasSelector) {
     }
 
     self.saveproject = function(name) {
+		if(name === null || name === "") {
+			return;
+		}
+		if(self.shapes.length === 0 && self.edits.length === 0) {
+			return;
+		}
         var stringifiedArray = JSON.stringify({
             shapes: self.shapes,
             edits: self.edits
@@ -500,8 +506,6 @@ function App(canvasSelector) {
                     self.parseToShape(shapeObjs[i]);
                 }
                 self.edits = editObjs;
-                console.log(self.edits);
-                console.log(self.shapes);
                 self.redraw();
             },
             error: function(xhr, err) {
@@ -543,6 +547,13 @@ function App(canvasSelector) {
     }
 
     self.savetemplate = function(name) {
+		if(name === null || name === "") {
+			return;
+		}
+		if(self.shapes.length === 0 && self.edits.length === 0) {
+			return;
+		}
+		
         var template = new Template(0);
 
         for (var i = 0; i < self.shapes.length; i++) {
