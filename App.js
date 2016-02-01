@@ -218,6 +218,14 @@ function App(canvasSelector) {
 				shape.moveTo(new Point(info.prevX, info.prevY));
 			}
         }
+		if (edit.type == "SetBrushColor") {
+			edit.active = false;
+			for(var i = 0; i < edit.info.length; i++) {
+				var info = edit.info[i];
+				var shape = self.findShape(info.shapeID);
+				shape.brushColor = info.prevBrushColor;
+			}
+		}
     }
 
     self.redo = function() {
@@ -246,6 +254,14 @@ function App(canvasSelector) {
 				shape.moveTo(new Point(info.posX, info.posY));
 			}
         }
+		if (edit.type == "SetBrushColor") {
+			edit.active = true;
+			for(var i = 0; i < edit.info.length; i++) {
+				var info = edit.info[i];
+				var shape = self.findShape(info.shapeID);
+				shape.brushColor = info.brushColor;
+			}
+		}
     }
 
     self.findShape = function(shapeID) {
@@ -536,9 +552,23 @@ function App(canvasSelector) {
 		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
 			if(self.shapes[i].selected === true) {
-				selected.push(self.shape[i]);
+				selected.push(self.shapes[i]);
 			}
 		}
+		var edit = {
+			type: "SetBrushColor",
+			info: [],
+			active: true
+		};
+		for(var i = 0; i < selected.length; i++) {
+			edit.info.push({
+				shapeID: selected[i].ID,
+				prevBrushColor: selected[i].brushColor,
+				brushColor: color
+			});
+			selected[i].brushColor = color;
+		}
+		self.edits.push(edit);
 		self.redraw();
     }
 
@@ -547,9 +577,23 @@ function App(canvasSelector) {
 		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
 			if(self.shapes[i].selected === true) {
-				selected.push(self.shape[i]);
+				selected.push(self.shapes[i]);
 			}
 		}
+		var edit = {
+			type: "SetFillColor",
+			info: [],
+			active: true
+		};
+		for(var i = 0; i < selected.length; i++) {
+			edit.info.push({
+				shapeID: selected[i].ID,
+				prevFillColor: selected[i].fillColor,
+				fillColor: color
+			});
+			selected[i].fillColor = color;
+		}
+		self.edits.push(edit);
 		self.redraw();
     }
 
@@ -558,20 +602,48 @@ function App(canvasSelector) {
 		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
 			if(self.shapes[i].selected === true) {
-				selected.push(self.shape[i]);
+				selected.push(self.shapes[i]);
 			}
 		}
+		var edit = {
+			type: "SetFillOption",
+			info: [],
+			active: true
+		};
+		for(var i = 0; i < selected.length; i++) {
+			edit.info.push({
+				shapeID: selected[i].ID,
+				prevFill: selected[i].fill,
+				fill: checked
+			});
+			selected[i].fill = checked;
+		}
+		self.edits.push(edit);
 		self.redraw();
-
     }
+	
     self.setBrush = function(brush) {
         self.brush = brush;
 		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
 			if(self.shapes[i].selected === true) {
-				selected.push(self.shape[i]);
+				selected.push(self.shapes[i]);
 			}
 		}
+		var edit = {
+			type: "SetBrush",
+			info: [],
+			active: true
+		};
+		for(var i = 0; i < selected.length; i++) {
+			edit.info.push({
+				shapeID: selected[i].ID,
+				prevBrush: selected[i].brush,
+				brush: brush
+			});
+			selected[i].brush = brush;
+		}
+		self.edits.push(edit);
 		self.redraw();
     }
 
@@ -580,7 +652,7 @@ function App(canvasSelector) {
 		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
 			if(self.shape[i].name === "Text" && self.shapes[i].selected === true) {
-				selected.push(self.shape[i]);
+				selected.push(self.shapes[i]);
 			}
 		}
 		var edit = {
@@ -589,8 +661,14 @@ function App(canvasSelector) {
 			active: true
 		};
 		for(var i = 0; i < selected.length; i++) {
-			
+			edit.info.push({
+				shapeID: selected[i].ID,
+				prevFont: selected[i].font,
+				font: font
+			});
+			selected[i].font = font;
 		}
+		self.edits.push(edit);
 		self.redraw();
     }
 
@@ -599,9 +677,23 @@ function App(canvasSelector) {
 		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
 			if(self.shape[i].name === "Text" && self.shapes[i].selected === true) {
-				self.shapes[i].fontSize = fontSize;
+				selected.push(self.shapes[i]);
 			}
 		}
+		var edit = {
+			type: "SetFontSize",
+			info: [],
+			active: true
+		};
+		for(var i = 0; i < selected.length; i++) {
+			edit.info.push({
+				shapeID: selected[i].ID,
+				prevFontSize: selected[i].fontSize,
+				fontSize: fontSize
+			});
+			selected[i].fontSize = fontSize;
+		}
+		self.edits.push(edit);
 		self.redraw();
     }
 
