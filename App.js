@@ -89,6 +89,16 @@ function App(canvasSelector) {
 
     self.movingStart = function(e, objects) {
         var startMove = self.getEventPoint(e);
+
+		if(objects.length === 0) {
+			for(var i = 0; i < self.shapes.length; i++) {
+				if(self.shapes[i].contains(startMove) && self.shapes[i].active) {
+					self.shapes[i].selected = true;
+					objects.push(self.shapes[i]);
+					break;
+				}
+			}
+		}
 		
 		var edit = {
 			type: "Moved",
@@ -163,13 +173,7 @@ function App(canvasSelector) {
                 }
             }
         } else if($('#tools').val() === "Move"){
-			var Objects = [];
-            for (var i = 0; i < self.shapes.length; i++) {
-                if (self.shapes[i].active && self.shapes[i].selected) {
-					Objects.push(self.shapes[i]);
-                }
-            }
-			self.movingStart(e, Objects);
+			self.movingStart(e, self.getSelected());
         }
         self.redraw();
     }
