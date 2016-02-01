@@ -24,8 +24,8 @@
     <div class="container">
         <div class=pghead>
             <div class=pgheadleft>
-                <label for="toolbar">Tools</label>
-                <select id="tools" name="tool">
+                <label for="tools">Tools</label>
+                <select id="tools" name="tool" class="form-control">
                     <option value="Square">Square</option>
                     <option value="Line">Line</option>
                     <option value="Circle">Circle</option>
@@ -63,7 +63,7 @@
                     <input type="text" id="projectname" placeholder="Project Name"> 
                     <span class="glyphicon glyphicon-save"></span>
                     <input type="button" class="btn btn-success btn-block" id="savebutton" value="save"></input>
-                    <select id="projectlist">
+                    <select id="projectlist" class="form-control">
                     </select>
                     <input type="button" class="btn btn-primary btn-block" id="loadbutton" value="load"></input>
                 </div>
@@ -84,7 +84,7 @@
                     <input type="text" id="templatename" placeholder="Template Name">
                     <span class="glyphicon glyphicon-save"></span>
                     <input type="button" class="btn btn-success btn-block" id="savetemplatebutton" value="save"></input>
-                    <select id="templatelist">
+                    <select id="templatelist" class="form-control" class="form-control">
                     </select>
                     <input type="button" class="btn btn-primary btn-block" id="loadtemplatebutton" value="loadtemplate"></input>
                 </div>
@@ -94,7 +94,7 @@
 
                 <div class=pgbodyrightbottom>
                     <span class="glyphicon glyphicon-text-size"></span>
-                    <select id="fontSize" name="fontS">
+                    <select id="fontSize" name="fontS" class="form-control">
                         <option value="8">8</option>
                         <option value="16" selected="selected">16</option>
                         <option value="24">24</option>
@@ -102,7 +102,7 @@
                     </select>
                     <br/>
                     <span class="glyphicon glyphicon-font"></span>
-                    <select id="fontfamily" name="font">
+                    <select id="fontfamily" name="font" class="form-control">
                         <option value="Arial" selected="selected">Arial</option>
                         <option value="Times New Roman">Times New Roman</option>
                         <option value="serif">serif</option>
