@@ -266,6 +266,14 @@ function App(canvasSelector) {
 				shape.fontSize = info.prevFontSize;
 			}
 		}
+		if (edit.type == "Deleted") {
+			edit.active = false;
+			for(var i = 0; i < edit.info.length; i++) {
+				var info = edit.info[i];
+				var shape = self.findShape(info.shapeID);
+				shape.active = true;
+			}
+		}
     }
 
     self.redo = function() {
@@ -340,6 +348,14 @@ function App(canvasSelector) {
 				var info = edit.info[i];
 				var shape = self.findShape(info.shapeID);
 				shape.fontSize = info.fontSize;
+			}
+		}
+		if (edit.type == "Deleted") {
+			edit.active = true;
+			for(var i = 0; i < edit.info.length; i++) {
+				var info = edit.info[i];
+				var shape = self.findShape(info.shapeID);
+				shape.active = false;
 			}
 		}
     }
@@ -763,6 +779,23 @@ function App(canvasSelector) {
 		self.edits.push(edit);
 		self.redraw();
     }
+	
+	self.deleteSelected = function() {
+		var selected = self.getSelected();
+		var edit = {
+			type: "Deleted",
+			info: [],
+			active: true
+		};
+		for(var i = 0; i < selected.length; i++) {
+			edit.info.push({
+				shapeID: selected[i].ID,
+			});
+			selected[i].active = false;
+		}
+		self.edits.push(edit);
+		self.redraw();
+	}
 
     self.setPageNumber = function(number) {
         document.getElementById("pagenumber").innerHTML = number;
@@ -868,6 +901,9 @@ $(function() {
         });
         $('#redobutton').click(function() {
             app.redo()
+        });
+		$('#deletebutton').click(function() {
+            app.deleteSelected();
         });
 
         $('#nextbutton').click(function() {
