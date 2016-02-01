@@ -678,6 +678,10 @@ $(function() {
                 };
             } else if ($(this).val() == "Select") {
                 app.shapeFactory = null;
+				$("#toolselectimage").attr("src", "images/select.jpg");
+            } else if ($(this).val() == "Move") {
+                app.shapeFactory = null;
+				$("#toolselectimage").attr("src", "images/move.jpg");
             }
         });
         $('#clearbutton').click(function() {
