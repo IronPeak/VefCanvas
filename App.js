@@ -646,7 +646,7 @@ function App(canvasSelector) {
 	self.getSelected = function() {
 		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
-			if(self.shapes[i].selected === true) {
+			if(self.shapes[i].selected === true && self.shapes[i].active === true) {
 				selected.push(self.shapes[i]);
 			}
 		}
