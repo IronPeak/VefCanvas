@@ -93,7 +93,6 @@ function App(canvasSelector) {
 		if(objects.length === 0) {
 			for(var i = 0; i < self.shapes.length; i++) {
 				if(self.shapes[i].contains(startMove) && self.shapes[i].active) {
-					self.shapes[i].selected = true;
 					objects.push(self.shapes[i]);
 					break;
 				}
