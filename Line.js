@@ -26,7 +26,6 @@ var Line = Shape.extend({
     stopDrawing: function(point) {
         this.size.x = point.x;
         this.size.y = point.y;
-        this.setDiameters();
     },
 
     startMove: function(point) {
@@ -39,16 +38,12 @@ var Line = Shape.extend({
         this.size = point.subtract(this.sizeOffset);
     },
 
-    setDiameters: function() {
-        this.minX = Math.min(this.size.x, this.pos.x);
-        this.maxX = Math.max(this.size.x, this.pos.x);
-        this.minY = Math.min(this.size.y, this.pos.y);
-        this.maxY = Math.max(this.size.y, this.pos.y);
-    },
-
     contains: function(point) {
-        this.setDiameters();
-        return this.minX <= point.x && point.x <= this.maxX && this.minY <= point.y && point.y <= this.maxY;
+        var minX = Math.min(this.size.x, this.pos.x);
+        var maxX = Math.max(this.size.x, this.pos.x);
+        var minY = Math.min(this.size.y, this.pos.y);
+        var maxY = Math.max(this.size.y, this.pos.y);
+        return minX <= point.x && point.x <= maxX && minY <= point.y && point.y <= maxY;
     },
 
 });

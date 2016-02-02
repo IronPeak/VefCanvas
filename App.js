@@ -89,6 +89,16 @@ function App(canvasSelector) {
 
     self.movingStart = function(e, objects) {
         var startMove = self.getEventPoint(e);
+        var i;
+
+		if(objects.length === 0) {
+			for(i = 0; i < self.shapes.length; i++) {
+				if(self.shapes[i].contains(startMove) && self.shapes[i].active) {
+					objects.push(self.shapes[i]);
+					break;
+				}
+			}
+		}
 		
 		var edit = {
 			type: "Moved",
@@ -96,7 +106,7 @@ function App(canvasSelector) {
 			active: true
 		};
 		
-		for(var i = 0; i < objects.length; i++) {
+		for(i = 0; i < objects.length; i++) {
 			edit.info.push({
 				shapeID: objects[i].ID,
 				prevX: objects[i].pos.x,
@@ -108,7 +118,7 @@ function App(canvasSelector) {
         var move = function(e) {
             var pos = self.getEventPoint(e);
 
-			for(var i = 0; i < objects.length; i++) {
+			for(i = 0; i < objects.length; i++) {
 				objects[i].moveTo(pos);
 			}
 
@@ -165,6 +175,7 @@ function App(canvasSelector) {
                 }
             }
         } else if($('#tools').val() === "Move"){
+
 			var Objects = [];
             for (i = 0; i < self.shapes.length; i++) {
                 if (self.shapes[i].active && self.shapes[i].selected) {
@@ -461,6 +472,12 @@ function App(canvasSelector) {
     };
 
     self.saveproject = function(name) {
+		if(name === null || name === "") {
+			return;
+		}
+		if(self.shapes.length === 0 && self.edits.length === 0) {
+			return;
+		}
         var stringifiedArray = JSON.stringify({
             shapes: self.shapes,
             edits: self.edits
@@ -509,8 +526,6 @@ function App(canvasSelector) {
                     self.parseToShape(shapeObjs[i]);
                 }
                 self.edits = editObjs;
-                console.log(self.edits);
-                console.log(self.shapes);
                 self.redraw();
             },
             error: function(xhr, err) {
@@ -553,6 +568,13 @@ function App(canvasSelector) {
     };
 
     self.savetemplate = function(name) {
+		if(name === null || name === "") {
+			return;
+		}
+		if(self.shapes.length === 0 && self.edits.length === 0) {
+			return;
+		}
+		
         var template = new Template(0);
 
         for (var i = 0; i < self.shapes.length; i++) {
@@ -656,7 +678,7 @@ function App(canvasSelector) {
 	self.getSelected = function() {
 		var selected = [];
 		for(var i = 0; i < self.shapes.length; i++) {
-			if(self.shapes[i].selected === true) {
+			if(self.shapes[i].selected === true && self.shapes[i].active === true) {
 				selected.push(self.shapes[i]);
 			}
 		}

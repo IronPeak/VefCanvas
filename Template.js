@@ -47,6 +47,7 @@ var Template = Shape.extend({
 
     draw: function(canvas) {
         for (var i = 0; i < this.templateShapes.length; i++) {
+			this.templateShapes[i].selected = this.selected;
             this.templateShapes[i].draw(canvas);
         }
     },
