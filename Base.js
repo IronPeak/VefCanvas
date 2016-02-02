@@ -12,7 +12,7 @@ Base.extend = function(_instance, _static) { // subclass
 
     // build the prototype
     Base._prototyping = true;
-    var proto = new this;
+    var proto = new this();
     extend.call(proto, _instance);
     proto.base = function() {
         // call this method from any other method to invoke that method's ancestor
@@ -28,7 +28,7 @@ Base.extend = function(_instance, _static) { // subclass
                 this._constructing = true;
                 constructor.apply(this, arguments);
                 delete this._constructing;
-            } else if (arguments[0] != null) { // casting
+            } else if (arguments[0] !== null) { // casting
                 return (arguments[0].extend || extend).call(arguments[0], proto);
             }
         }

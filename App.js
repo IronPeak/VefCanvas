@@ -2,7 +2,7 @@ function App(canvasSelector) {
     var self = this;
     self.getEventPoint = function(e) {
         return new Point(e.pageX - self.canvasOffset.x, e.pageY - self.canvasOffset.y);
-    }
+    };
     self.drawingStart = function(e) {
         var startPos = self.getEventPoint(e);
         var shape = self.shapeFactory();
@@ -22,7 +22,7 @@ function App(canvasSelector) {
 
             self.redraw();
             shape.draw(self.canvasContext);
-        }
+        };
 
         var drawingStop = function(e) {
             if (self.shapes === undefined) {
@@ -32,7 +32,7 @@ function App(canvasSelector) {
 
             shape.stopDrawing(pos, self.canvasContext);
 
-            pos.log('drawing stop')
+            pos.log('drawing stop');
 
             self.shapes.push(shape);
             self.edits.push({
@@ -49,14 +49,14 @@ function App(canvasSelector) {
             });
 
             self.redraw();
-        }
+        };
 
         // Add drawing and drawingStop functions to the mousemove and mouseup events
         self.canvas.on({
             mousemove: drawing,
             mouseup: drawingStop
         });
-    }
+    };
 
     self.writingStart = function(e) {
         var startPos = self.getEventPoint(e);
@@ -71,7 +71,7 @@ function App(canvasSelector) {
         shape.font = self.font;
 
         var input = prompt("Please enter the text", "Sample Text");
-        if (input == null) {
+        if (input === null) {
             return;
         }
         shape.text = input;
@@ -85,7 +85,7 @@ function App(canvasSelector) {
         shape.added(self.canvasContext);
 
         self.redraw();
-    }
+    };
 
     self.movingStart = function(e, objects) {
         var startMove = self.getEventPoint(e);
@@ -94,7 +94,7 @@ function App(canvasSelector) {
 			type: "Moved",
 			info: [],
 			active: true
-		}
+		};
 		
 		for(var i = 0; i < objects.length; i++) {
 			edit.info.push({
@@ -113,16 +113,17 @@ function App(canvasSelector) {
 			}
 
             self.redraw();
-        }
+        };
 
         var moveStop = function(e) {
             var pos = self.getEventPoint(e);
+            var i;
 
-            for(var i = 0; i < objects.length; i++) {
+            for(i = 0; i < objects.length; i++) {
 				objects[i].moveTo(pos);
 			}
 			
-			for(var i = 0; i < objects.length; i++) {
+			for(i = 0; i < objects.length; i++) {
 				edit.info[i].posX = objects[i].pos.x;
 				edit.info[i].posY = objects[i].pos.y;
 			}
@@ -134,27 +135,28 @@ function App(canvasSelector) {
             });
 
             self.redraw();
-        }
+        };
 
         self.canvas.on({
             mousemove: move,
             mouseup: moveStop
         });
-    }
+    };
 	
 	self.selectObject = function(e, object) {
         object.selected = !object.selected;
         self.redraw();
-    }
+    };
 
     self.mousedown = function(e) {
         //Check is text tool is selected
+        var i;
         if ($('#tools').val() === "Text") {
             self.writingStart(e);
-        } else if (self.shapeFactory != null) {
+        } else if (self.shapeFactory !== null) {
             self.drawingStart(e);
         } else if($('#tools').val() === "Select"){
-            for (var i = 0; i < self.shapes.length; i++) {
+            for (i = 0; i < self.shapes.length; i++) {
                 if (self.shapes[i].active) {
                     if (self.shapes[i].contains(self.getEventPoint(e))) {
                         self.selectObject(e, self.shapes[i]);
@@ -164,7 +166,7 @@ function App(canvasSelector) {
             }
         } else if($('#tools').val() === "Move"){
 			var Objects = [];
-            for (var i = 0; i < self.shapes.length; i++) {
+            for (i = 0; i < self.shapes.length; i++) {
                 if (self.shapes[i].active && self.shapes[i].selected) {
 					Objects.push(self.shapes[i]);
                 }
@@ -172,7 +174,7 @@ function App(canvasSelector) {
 			self.movingStart(e, Objects);
         }
         self.redraw();
-    }
+    };
 
     self.redraw = function() {
         self.canvasContext.clearRect(0, 0, self.canvasContext.canvas.width, self.canvasContext.canvas.height);
@@ -184,181 +186,187 @@ function App(canvasSelector) {
             }
         }
 
-    }
+    };
 
     self.clear = function() {
         self.shapes = [];
         self.edits = [];
         self.redraw();
-    }
+    };
 
     self.undo = function() {
-        if (!self.edits.length == 0) {
+        if (self.edits.length !== 0) {
             for (var i = this.edits.length - 1; i >= 0; i--) {
-                if (this.edits[i].active == true) {
+                if (this.edits[i].active === true) {
                     this.undoEdit(this.edits[i]);
                     self.redraw();
                     return;
                 }
             }
         }
-    }
+    };
 
     self.undoEdit = function(edit) {
+        var i;
+        var info;
+        var shape;
         if (edit.type == "Created") {
             edit.active = false;
             self.findShape(edit.shapeID).active = false;
         }
         if (edit.type == "Moved") {
             edit.active = false;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.startMove(shape.pos);
 				shape.moveTo(new Point(info.prevX, info.prevY));
 			}
         }
 		if (edit.type == "SetBrush") {
 			edit.active = false;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.brush = info.prevBrush;
 			}
 		}
 		if (edit.type == "SetBrushColor") {
 			edit.active = false;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.brushColor = info.prevBrushColor;
 			}
 		}
 		if (edit.type == "SetFillColor") {
 			edit.active = false;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.fillColor = info.prevFillColor;
 			}
 		}
 		if (edit.type == "SetFillOption") {
 			edit.active = false;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.fill = info.prevFill;
 			}
 		}
 		if (edit.type == "SetFont") {
 			edit.active = false;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.font = info.prevFont;
 			}
 		}
 		if (edit.type == "SetFontSize") {
 			edit.active = false;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.fontSize = info.prevFontSize;
 			}
 		}
 		if (edit.type == "Deleted") {
 			edit.active = false;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.active = true;
 			}
 		}
-    }
+    };
 
     self.redo = function() {
-        if (!self.edits.length == 0) {
+        if (self.edits.length !== 0) {
             for (var i = 0; i < this.edits.length; i++) {
-                if (this.edits[i].active == false) {
+                if (this.edits[i].active === false) {
                     this.redoEdit(this.edits[i]);
                     self.redraw();
                     return;
                 }
             }
         }
-    }
+    };
 
     self.redoEdit = function(edit) {
+        var i;
+        var info;
+        var shape;
         if (edit.type == "Created") {
             edit.active = true;
             self.findShape(edit.shapeID).active = true;
         }
         if (edit.type == "Moved") {
             edit.active = true;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.startMove(shape.pos);
 				shape.moveTo(new Point(info.posX, info.posY));
 			}
         }
 		if (edit.type == "SetBrush") {
 			edit.active = true;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.brush = info.brush;
 			}
 		}
 		if (edit.type == "SetBrushColor") {
 			edit.active = true;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.brushColor = info.brushColor;
 			}
 		}
 		if (edit.type == "SetFillColor") {
 			edit.active = true;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.fillColor = info.fillColor;
 			}
 		}
 		if (edit.type == "SetFillOption") {
 			edit.active = true;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.fill = info.fill;
 			}
 		}
 		if (edit.type == "SetFont") {
 			edit.active = true;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.font = info.font;
 			}
 		}
 		if (edit.type == "SetFontSize") {
 			edit.active = true;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.fontSize = info.fontSize;
 			}
 		}
 		if (edit.type == "Deleted") {
 			edit.active = true;
-			for(var i = 0; i < edit.info.length; i++) {
-				var info = edit.info[i];
-				var shape = self.findShape(info.shapeID);
+			for(i = 0; i < edit.info.length; i++) {
+				info = edit.info[i];
+				shape = self.findShape(info.shapeID);
 				shape.active = false;
 			}
 		}
-    }
+    };
 
     self.findShape = function(shapeID) {
         for (var i = 0; i < self.shapes.length; i++) {
@@ -366,7 +374,7 @@ function App(canvasSelector) {
                 return self.shapes[i];
             }
         }
-    }
+    };
 
     self.nextb = function() {
         console.log("NextB");
@@ -385,7 +393,7 @@ function App(canvasSelector) {
         self.edits = self.newPage[index].edits;
         self.setPageNumber(index + 1);
         self.redraw();
-    }
+    };
 
     self.newBoard = function() {
         self.newPage[index] = {
@@ -401,7 +409,7 @@ function App(canvasSelector) {
         self.edits = self.newPage[index].edits;
         self.setPageNumber(index + 1);
         self.redraw();
-    }
+    };
 
     self.prevb = function() {
         if (index === 0) {
@@ -417,9 +425,10 @@ function App(canvasSelector) {
             self.setPageNumber(index + 1);
             self.redraw();
         }
-    }
+    };
 
     self.getprojectlist = function() {
+        var i;
         var param = {
             "user": "hrafnh14",
             "template": false
@@ -435,10 +444,10 @@ function App(canvasSelector) {
             success: function(data) {
                 var dropdown = document.getElementById("projectlist");
                 var length = dropdown.options.length;
-                for (var i = length; i >= 0; i--) {
+                for (i = length; i >= 0; i--) {
                     dropdown.remove(i);
                 }
-                for (var i = 0; i < data.length; i++) {
+                for (i = 0; i < data.length; i++) {
                     var option = document.createElement("option");
                     option.text = data[i].WhiteboardTitle;
                     option.value = data[i].ID;
@@ -449,7 +458,7 @@ function App(canvasSelector) {
 
             }
         });
-    }
+    };
 
     self.saveproject = function(name) {
         var stringifiedArray = JSON.stringify({
@@ -478,7 +487,7 @@ function App(canvasSelector) {
 
             }
         });
-    }
+    };
 
     self.loadproject = function(id) {
         var param = {
@@ -508,9 +517,10 @@ function App(canvasSelector) {
 
             }
         });
-    }
+    };
 
     self.gettemplatelist = function() {
+        var i;
         var param = {
             "user": "hrafnh14",
             "template": true
@@ -526,10 +536,10 @@ function App(canvasSelector) {
             success: function(data) {
                 var dropdown = document.getElementById("templatelist");
                 var length = dropdown.options.length;
-                for (var i = length; i >= 0; i--) {
+                for (i = length; i >= 0; i--) {
                     dropdown.remove(i);
                 }
-                for (var i = 0; i < data.length; i++) {
+                for (i = 0; i < data.length; i++) {
                     var option = document.createElement("option");
                     option.text = data[i].WhiteboardTitle;
                     option.value = data[i].ID;
@@ -540,7 +550,7 @@ function App(canvasSelector) {
 
             }
         });
-    }
+    };
 
     self.savetemplate = function(name) {
         var template = new Template(0);
@@ -583,7 +593,7 @@ function App(canvasSelector) {
 
             }
         });
-    }
+    };
 
     self.loadtemplate = function(id) {
         var param = {
@@ -612,7 +622,7 @@ function App(canvasSelector) {
 
             }
         });
-    }
+    };
 
     self.parseToShape = function(obj) {
         var shape;
@@ -641,7 +651,7 @@ function App(canvasSelector) {
         self.shapes.push(shape);
         self.shapeID++;
         return shape;
-    }
+    };
 	
 	self.getSelected = function() {
 		var selected = [];
@@ -651,14 +661,14 @@ function App(canvasSelector) {
 			}
 		}
 		return selected;
-	}
+	};
 	
 	self.clearSelection = function() {
 		for(var i = 0; i < self.shapes.length; i++) {
 			self.shapes[i].selected = false;
 		}
 		self.redraw();
-	}
+	};
 
     self.setBrushColor = function(color) {
         self.brushColor = color;
@@ -678,7 +688,7 @@ function App(canvasSelector) {
 		}
 		self.edits.push(edit);
 		self.redraw();
-    }
+    };
 
     self.setFillColor = function(color) {
         self.fillColor = color;
@@ -698,7 +708,7 @@ function App(canvasSelector) {
 		}
 		self.edits.push(edit);
 		self.redraw();
-    }
+    };
 
     self.setFillOption = function(checked) {
         self.fill = checked;
@@ -718,7 +728,7 @@ function App(canvasSelector) {
 		}
 		self.edits.push(edit);
 		self.redraw();
-    }
+    };
 	
     self.setBrush = function(brush) {
         self.brush = brush;
@@ -738,7 +748,7 @@ function App(canvasSelector) {
 		}
 		self.edits.push(edit);
 		self.redraw();
-    }
+    };
 
     self.setFontFamily = function(font) {
         self.font = font;
@@ -758,7 +768,7 @@ function App(canvasSelector) {
 		}
 		self.edits.push(edit);
 		self.redraw();
-    }
+    };
 
     self.setFontSize = function(fontSize) {
         self.fontSize = fontSize;
@@ -778,7 +788,7 @@ function App(canvasSelector) {
 		}
 		self.edits.push(edit);
 		self.redraw();
-    }
+    };
 	
 	self.deleteSelected = function() {
 		var selected = self.getSelected();
@@ -795,11 +805,11 @@ function App(canvasSelector) {
 		}
 		self.edits.push(edit);
 		self.redraw();
-	}
+	};
 
     self.setPageNumber = function(number) {
         document.getElementById("pagenumber").innerHTML = number;
-    }
+    };
 
     self.init = function() {
         // Initialize App	
@@ -810,9 +820,9 @@ function App(canvasSelector) {
         });
         self.shapeFactory = null;
         self.canvasContext = canvas.getContext("2d");
-        self.shapes = new Array();
-        self.newPage = new Array();
-        self.edits = new Array();
+        self.shapes = new Array([]);
+        self.newPage = new Array([]);
+        self.edits = new Array([]);
         self.shapeID = 0;
 
         // Set defaults
@@ -826,7 +836,7 @@ function App(canvasSelector) {
         self.text = " ";
 
         self.setPageNumber(1);
-    }
+    };
 
     self.getprojectlist();
     self.gettemplatelist();
@@ -894,23 +904,23 @@ $(function() {
 			app.clearSelection();
         });
         $('#clearbutton').click(function() {
-            app.clear()
+            app.clear();
         });
         $('#undobutton').click(function() {
-            app.undo()
+            app.undo();
         });
         $('#redobutton').click(function() {
-            app.redo()
+            app.redo();
         });
 		$('#deletebutton').click(function() {
             app.deleteSelected();
         });
 
         $('#nextbutton').click(function() {
-            app.nextb()
+            app.nextb();
         });
         $('#prevbutton').click(function() {
-            app.prevb()
+            app.prevb();
         });
 
         $('#savebutton').click(function() {
@@ -932,16 +942,16 @@ $(function() {
         });
 
         $('#brushcolor').change(function() {
-            app.setBrushColor($(this).val())
+            app.setBrushColor($(this).val());
         });
         $('#fillcolor').change(function() {
-            app.setFillColor($(this).val())
+            app.setFillColor($(this).val());
         });
         $('#fillshapes').click(function() {
-            app.setFillOption(this.checked)
+            app.setFillOption(this.checked);
         });
         $('#brushsize').change(function() {
-            app.setBrush($(this).val())
+            app.setBrush($(this).val());
         });
         $('#fontSize').change(function() {
             app.setFontSize($(this).val());

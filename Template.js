@@ -9,7 +9,7 @@ var Template = Shape.extend({
         this.base(obj);
         this.templateShapes = [];
         for (var i = 0; i < obj.templateShapes.length; i++) {
-            var shape = this.parseToShape(obj.templateShapes[i])
+            var shape = this.parseToShape(obj.templateShapes[i]);
             this.templateShapes.push(shape);
         }
     },

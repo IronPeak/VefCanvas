@@ -1,5 +1,5 @@
 {
-  "name": "VefCanvas",
+  "name": "vefcanvas",
   "version": "1.0.0",
   "description": " ",
   "main": "App.js",
@@ -8,10 +8,14 @@
   },
   "repository": {},
   "keywords": [],
-  "author": "",
+  "author": "Helgi&Hrafn",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/IronPeak/VefCanvas/issues"
   },
-  "homepage": "https://github.com/IronPeak/VefCanvas#readme"
+  "homepage": "https://github.com/IronPeak/VefCanvas#readme",
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.12.0"
+  },
+  "dependencies": {}
 }
